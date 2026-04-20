@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+
+<record id="view_expanse_list" model="ir.ui.view">
+    <field name="name">trading.expense.list</field>
+    <field name="model">trading.expense</field>
+    <field name="arch" type="xml">
+        <list
+         string="Expenses">
+            <field name="name"/>
+            <!-- <field name="amount"/> -->
+            <!-- <field name="date"/> -->
+            <!-- <field name="description"/> -->
+        </list>
+    </field>
+</record>
+
+<record id="view_expanse_form" model="ir.ui.view">
+    <field name="name">trading.expense.form</field>
+    <field name="model">trading.expense</field>
+    <field name="arch" type="xml">
+        <form string="Expense">
+            <sheet>
+                <group>
+                    <field name="name"/>
+                    <!-- <field name="amount"/> -->
+                    <!-- <field name="date"/> -->
+                    <!-- <field name="description"/> -->
+                </group>
+            </sheet>
+        </form>
+    </field>
+</record>
+
+    <record id="action_expense" model="ir.actions.act_window">
+        <field name="name">Expenses</field>
+        <field name="res_model">trading.expense</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+
+
+
+</odoo>

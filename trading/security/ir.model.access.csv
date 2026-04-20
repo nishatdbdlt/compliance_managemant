@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_trading_product_category_user,trading.product.category.user,model_trading_product_category,base.group_user,1,1,1,1
+access_trading_stock_location_user,trading.stock.location.user,model_trading_stock_location,base.group_user,1,1,1,1
+access_trading_vendor_user,trading.vendor.user,model_trading_vendor,base.group_user,1,1,1,1
+access_trading_expense_user,trading.expense.user,model_trading_expense,base.group_user,1,1,1,1
+access_trading_payment_user,trading.payment.user,model_trading_payment,base.group_user,1,1,1,1
+access_trading_sales_user,trading.sales.user,model_trading_sales,base.group_user,1,1,1,1

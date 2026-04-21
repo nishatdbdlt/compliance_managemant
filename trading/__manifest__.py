@@ -27,6 +27,7 @@ Features:
         'views/vendor.xml',
         'views/expanse.xml',
         'views/payment.xml',
+        'views/tranding_product.xml',
         "views/menu.xml",
     ],
     "installable": True,

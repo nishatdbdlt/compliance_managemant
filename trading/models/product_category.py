@@ -1,15 +1,4 @@
-# # -*- coding: utf-8 -*-
-# from odoo import fields, models
 
-# class ProductCategory(models.Model):
-#     _name = 'trading.product.category'     
-#     _description = 'Product Category'
-#     _parent_name = "parent_id"
-
-#     name = fields.Char(string='Name', required=True)
-#     parent_id = fields.Many2one('trading.product.category', string='Parent Category')
-
-# -*- coding: utf-8 -*-
 from odoo import fields, models, api
 
 

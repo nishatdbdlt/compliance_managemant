@@ -1,57 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data noupdate="0">
-        <!-- Sequence for Trading Sales -->
-        <record id="seq_trading_sales" model="ir.sequence">
-            <field name="name">Trading Sales</field>
-            <field name="code">trading.sales</field>
-            <field name="prefix">TS/</field>
-            <field name="padding">5</field>
-            <field name="company_id" eval="False"/>
-        </record>
+    <!-- Sequence for Trading Expense -->
+    
 
-        <!-- Sequence for Trading Product -->
-        <record id="seq_trading_product" model="ir.sequence">
-            <field name="name">Trading Product</field>
-            <field name="code">tranding.product</field>
-            <field name="prefix">PRD/</field>
-            <field name="padding">5</field>
-            <field name="company_id" eval="False"/>
-        </record>
-
-        <!-- Sequence for Trading Vendor -->
-        <record id="seq_trading_vendor" model="ir.sequence">
-            <field name="name">Trading Vendor</field>
-            <field name="code">trading.vendor</field>
-            <field name="prefix">VEN/</field>
-            <field name="padding">5</field>
-            <field name="company_id" eval="False"/>
-        </record>
-
-        <record id="seq_trading_customer" model="ir.sequence">
-            <field name="name">Trading Customer</field>
-            <field name="code">trading.vendorr</field>
-            <field name="prefix">CUS/</field>
-            <field name="padding">5</field>
-            <field name="company_id" eval="False"/>
-        </record>
-
-        <!-- Sequence for Trading Expense -->
-        <record id="seq_trading_expense" model="ir.sequence">
+    <record id="seq_trading_expense" model="ir.sequence">
             <field name="name">Trading Expense</field>
-            <field name="code">trading.expense</field>
+            <field name="code">trd.expense</field>
             <field name="prefix">EXP/</field>
             <field name="padding">5</field>
             <field name="company_id" eval="False"/>
         </record>
 
-        <!-- Sequence for Trading Payment -->
-        <record id="seq_trading_payment" model="ir.sequence">
-            <field name="name">Trading Payment</field>
-            <field name="code">trading.payment</field>
-            <field name="prefix">PAY/</field>
+        <record id="seq_trading_sales" model="ir.sequence">
+            <field name="name">Trading Sales</field>
+            <field name="code">trd.sales</field>
+            <field name="prefix">SALES/</field>
             <field name="padding">5</field>
             <field name="company_id" eval="False"/>
         </record>
-    </data>
 </odoo>

@@ -3,7 +3,7 @@ from odoo import fields, models, api
 
 
 class ProductCategory(models.Model):
-    _name = 'trading.product.category'
+    _name = 'trd.product.category'
     _description = 'Product Category'
 
     _parent_name = 'parent_id'
@@ -12,7 +12,7 @@ class ProductCategory(models.Model):
 
     name = fields.Char(required=True)
     parent_id = fields.Many2one(
-        'trading.product.category',
+        'trd.product.category',
         string='Parent Category')
     parent_path = fields.Char(index=True)
 

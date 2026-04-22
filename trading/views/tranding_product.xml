@@ -7,6 +7,7 @@
         <field name="model">tranding.product</field>
         <field name="arch" type="xml">
             <list string="Product">
+                <field name="sl_no"/>
                 <field name="name"/>
                 <field name="price" string="cost_Price"/>
                  <field name='product_category'/>
@@ -26,6 +27,7 @@
             <form string="Product">
                 <sheet>
                     <group>
+                        <field name="sl_no"/>
                         <field name="name"/>
                         <field name="price" string="cost_Price"/>
                         <field name='product_category'/>

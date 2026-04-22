@@ -10,17 +10,10 @@ class ProductCategory(models.Model):
     _parent_store = True
     _rec_name = 'complete_name'
 
-
-
     name = fields.Char(required=True)
-
     parent_id = fields.Many2one(
         'trading.product.category',
-        string='Parent Category'
-    )
-
-  
-
+        string='Parent Category')
     parent_path = fields.Char(index=True)
 
     complete_name = fields.Char(
@@ -31,12 +24,12 @@ class ProductCategory(models.Model):
 
     @api.depends('name', 'parent_id.complete_name')
     def _compute_complete_name(self):
-     for rec in self:
-        if rec.parent_id and rec.parent_id.complete_name:
-            rec.complete_name = (
-                rec.parent_id.complete_name
-                + ' / ' +
-                (rec.name or '')
-            )
-        else:
-            rec.complete_name = rec.name or ''
+        for rec in self:
+            if rec.parent_id and rec.parent_id.complete_name:
+                rec.complete_name = (
+                    rec.parent_id.complete_name
+                    + ' / ' +
+                    (rec.name or '')
+                )
+            else:
+                rec.complete_name = rec.name or ''

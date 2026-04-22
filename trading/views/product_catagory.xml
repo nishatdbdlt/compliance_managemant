@@ -9,12 +9,8 @@
         <field name="model">trading.product.category</field>
         <field name="arch" type="xml">
             <list string="Product Categories">
-                
                 <field name="complete_name"/>
-
-               
-
-            </list>
+                 </list>
         </field>
     </record>
 

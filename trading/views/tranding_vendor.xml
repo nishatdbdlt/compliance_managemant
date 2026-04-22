@@ -1,7 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
 
-    <!-- Customer List View -->
     <record id="view_customer_list" model="ir.ui.view">
         <field name="name">trading.vendor.customer.list</field>
         <field name="model">trading.vendor</field>
@@ -15,29 +14,7 @@
             </list>
         </field>
     </record>
-
-    <!-- Customer Form View -->
-    <record id="view_customer_form" model="ir.ui.view">
-        <field name="name">trading.vendor.customer.form</field>
-        <field name="model">trading.vendor</field>
-        <field name="arch" type="xml">
-            <form string="Customer">
-                <sheet>
-                    <group string="Customer Information">
-                        <field name="sl_no"/>
-                        <field name="name"/>
-                        <field name="phone"/>
-                        <field name="email"/>
-                        <field name="address"/>
-                        <field name="is_customer"/>
-                        <field name="is_vendor"/>
-                    </group>
-                </sheet>
-            </form>
-        </field>
-    </record>
-
-    <!-- Vendor List View -->
+    
     <record id="view_vendor_list" model="ir.ui.view">
         <field name="name">trading.vendor.vendor.list</field>
         <field name="model">trading.vendor</field>
@@ -49,8 +26,30 @@
                 <field name="email"/>
                 <field name="address"/>
                 <field name="is_vendor"/>
-                <field name="is_customer"/>
+                <!-- <field name="is_customer"/> -->
             </list>
+        </field>
+    </record>
+
+    <record id="view_customer_form" model="ir.ui.view">
+        <field name="name">trading.vendor.customer.form</field>
+        <field name="model">trading.vendor</field>
+        <field name="arch" type="xml">
+            <form string="Customer">
+                <sheet>
+                    <group string="Customer Information">
+                        <field name="sl_no"/>
+                        <field name="name"/>
+                        <field name="phone"/>
+                        <field name="email"/>
+                        </group>
+                    <group>
+                         <field name="address"/>
+                        <field name="is_customer"/>
+                        <!-- <field name="is_vendor"/> -->
+                    </group>
+                </sheet>
+            </form>
         </field>
     </record>
 
@@ -61,22 +60,22 @@
         <field name="arch" type="xml">
             <form string="Vendor">
                 <sheet>
-                    <group string="Vendor Information">
+                    <group>
                         <field name="sl_no"/>
                         <field name="name"/>
                         <field name="phone"/>
                         <field name="email"/>
+                    </group>
+                    <group>
                         <field name="address"/>
                         <field name="is_vendor"/>
-                        <field name="is_customer"/>
+                        <!-- <field name="is_customer"/> -->
                     </group>
                 </sheet>
             </form>
         </field>
     </record>
-
-    <!-- Customer Action -->
-    <record id="action_customer" model="ir.actions.act_window">
+ <record id="action_customer" model="ir.actions.act_window">
         <field name="name">Customers</field>
         <field name="res_model">trading.vendor</field>
         <field name="view_mode">list,form</field>
@@ -87,7 +86,7 @@
             (0, 0, {'view_mode': 'form', 'view_id': ref('view_customer_form')}),
         ]"/>
     </record>
-
+    
     <!-- Vendor Action -->
     <record id="action_vendor" model="ir.actions.act_window">
         <field name="name">Vendors</field>

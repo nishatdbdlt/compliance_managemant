@@ -9,13 +9,9 @@
         <field name="arch" type="xml">
             <list string="Sales">
                 <field name="Sl_no"/>
-                <field name="name"/>
-                <field name="product"/>
-                <field name="quantity"/>
-                <field name="price"/>
-                <field name="total"/>
-                <field name="vendor_id"/>
-                <field name="category_id"/>
+                <field name="customer_id"/>
+                <field name="total_amount"/>
+                <field name="state" widget="badge" decoration-success="state == 'confirmed'" decoration-info="state == 'draft'"/>
             </list>
         </field>
     </record>
@@ -26,26 +22,61 @@
         <field name="model">trd.sales</field>
         <field name="arch" type="xml">
             <form string="Sales">
+                <header>
+                    <button name="action_confirm" string="Confirm" type="object" class="oe_highlight" invisible="state != 'draft'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed"/>
+                </header>
                 <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="Sl_no" readonly="1"/>
+                        </h1>
+                    </div>
                     <group>
-                      <field name="Sl_no"/>
-                      <field name="name"/>
-                     <field name="product"/>
+                        <group>
+                            <field name="customer_id" required="1"/>
+                        </group>
+                        <group>
+                            <field name="total_amount" readonly="1"/>
+                        </group>
                     </group>
-
-                    <group>
-                        <field name="quantity"/>
-                        <field name="price"/>
-                        <field name="total" readonly="1"/>
-                    </group>
-
-                    <group string="Relations">
-                        <field name="vendor_id"/>
-                        <field name="category_id"/>
-                        <field name="stock_id"/>
-                        <field name="payment_id"/>
-                        <field name="expense_id"/>
-                    </group>
+                    <notebook>
+                        <page string="Add Product" name="order_lines">
+                            <field name="sale_line_ids" mode="list,form">
+                                <list string="Add Product" editable="bottom">
+                                    <!-- <field name="sl_no"/> -->
+                                    <field name="product_id"/>
+                                    <field name="quantity"/>
+                                    <field name="price"/>
+                                    <field name="discount"/>
+                                    <field name="total" readonly="1"/>
+                                </list>
+                                <form string="Add Product">
+                                    <group>
+                                        <!-- <field name="sl_no"/> -->
+                                        <field name="product_id"/>
+                                        <field name="quantity"/>
+                                        <field name="price"/>
+                                        <field name="discount"/>
+                                        <field name="total" readonly="1"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Other Info" name="other_info">
+                            <group>
+                                <group>
+                                    <field name="vendor_id"/>
+                                    <field name="category_id"/>
+                                </group>
+                                <group>
+                                    <field name="stock_id"/>
+                                    <field name="payment_id"/>
+                                    <field name="expense_id"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>

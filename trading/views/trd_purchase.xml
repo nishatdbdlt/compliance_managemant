@@ -1,32 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <odoo>
-
-    <!-- TREE -->
-    <record id="view_trd_sales_list" model="ir.ui.view">
-        <field name="name">trd.sales.list</field>
-        <field name="model">trd.sales</field>
+    <!-- TREE VIEW -->
+    <record id="view_trd_purchase_list" model="ir.ui.view">
+        <field name="name">trd.purchase.list</field>
+        <field name="model">trd.purchase</field>
         <field name="arch" type="xml">
-            <list string="Sales">
+            <list string="Purchases">
                 <field name="Sl_no"/>
-                <field name="customer_id"/>
+                <field name="supplier_id"/>
                 <field name="total_amount"/>
                 <field name="state" widget="badge" decoration-success="state == 'confirmed'" decoration-info="state == 'draft'"/>
-                <field name="date"/>
+                 <field name="date"/>
                 <field name="Location"/>
             </list>
         </field>
     </record>
 
-    <!-- FORM -->
-    <record id="view_trading_sales_form" model="ir.ui.view">
-        <field name="name">trd.sales.form</field>
-        <field name="model">trd.sales</field>
+    <!-- FORM VIEW -->
+    <record id="view_trading_purchase_form" model="ir.ui.view">
+        <field name="name">trd.purchase.form</field>
+        <field name="model">trd.purchase</field>
         <field name="arch" type="xml">
-            <form string="Sales">
+            <form string="Purchase">
                 <header>
                     <button name="action_confirm" string="Confirm" type="object" class="oe_highlight" invisible="state != 'draft'"/>
-                    <!-- <button name="action_print_report" string="Print" type="object" class="oe_highlight" invisible="state != 'confirmed'"/> -->
+                    <button name="action_print_report" string="Print" type="object" class="oe_highlight" invisible="state != 'confirmed'"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,confirmed"/>
                 </header>
                 <sheet>
@@ -37,7 +35,7 @@
                     </div>
                     <group>
                         <group>
-                            <field name="customer_id" required="1"/>
+                            <field name="supplier_id" required="1"/>
                         </group>
                         <group>
                             <field name="date"/>
@@ -45,13 +43,12 @@
                         </group>
                         <group>
                             <field name="total_amount" readonly="1"/>
-                           </group>
                         </group>
+                    </group>
                     <notebook>
                         <page string="Add Product" name="order_lines">
-                            <field name="sale_line_ids" mode="list,form">
+                            <field name="purchase_line_ids" mode="list,form">
                                 <list string="Add Product" editable="bottom">
-                                    <!-- <field name="sl_no"/> -->
                                     <field name="product_id"/>
                                     <field name="quantity"/>
                                     <field name="price"/>
@@ -60,7 +57,6 @@
                                 </list>
                                 <form string="Add Product">
                                     <group>
-                                        <!-- <field name="sl_no"/> -->
                                         <field name="product_id"/>
                                         <field name="quantity"/>
                                         <field name="price"/>
@@ -70,8 +66,18 @@
                                 </form>
                             </field>
                         </page>
-                        
-                        
+                        <page string="Other Info" name="other_info">
+                            <group>
+                                <group>
+                                    <field name="vendor_id"/>
+                                </group>
+                                <group>
+                                    <!-- <field name="stock_id"/> -->
+                                    <!-- <field name="payment_id"/> -->
+                                    <!-- <field name="expense_id"/> -->
+                                </group>
+                            </group>
+                        </page>
                     </notebook>
                 </sheet>
             </form>
@@ -79,10 +85,9 @@
     </record>
 
     <!-- ACTION -->
-    <record id="action_trading_sales" model="ir.actions.act_window">
-        <field name="name">Sales</field>
-        <field name="res_model">trd.sales</field>
+    <record id="action_trading_purchase" model="ir.actions.act_window">
+        <field name="name">Purchases</field>
+        <field name="res_model">trd.purchase</field>
         <field name="view_mode">list,form</field>
     </record>
-
 </odoo>

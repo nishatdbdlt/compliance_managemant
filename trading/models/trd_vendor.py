@@ -7,6 +7,7 @@ class Vendor(models.Model):
     name = fields.Char(string='Name', required=True)
     email = fields.Char(string='Email')
     phone = fields.Char(string='Phone')
+    mobile = fields.Char(string='Mobile')
     address = fields.Text(string='Address')
     is_customer = fields.Boolean(string='Customer')
     is_vendor = fields.Boolean(string='Vendor')

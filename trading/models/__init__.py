@@ -5,3 +5,4 @@ from . import trd_vendor
 from . import trd_product  
 from . import trd_product_category
 from . import trd_stock_location
+from . import trd_purchase

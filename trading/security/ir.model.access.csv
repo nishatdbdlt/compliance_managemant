@@ -15,3 +15,7 @@ access_trd_product_admin,trd.product.admin,model_trd_product,trading.group_tradi
 access_trd_product_user,trd.product.user,model_trd_product,trading.group_trading_user,1,0,0,0
 access_trd_sales_line_admin,trd.sales.line.admin,model_trd_sales_line,trading.group_trading_admin,1,1,1,1
 access_trd_sales_line_user,trd.sales.line.user,model_trd_sales_line,trading.group_trading_user,1,0,0,0
+access_trd_purchase_admin,trd.purchase.admin,model_trd_purchase,trading.group_trading_admin,1,1,1,1
+access_trd_purchase_user,trd.purchase.user,model_trd_purchase,trading.group_trading_user,1,0,0,0
+access_trd_purchase_line_admin,trd.purchase.line.admin,model_trd_purchase_line,trading.group_trading_admin,1,1,1,1
+access_trd_purchase_line_user,trd.purchase.line.user,model_trd_purchase_line,trading.group_trading_user,1,0,0,0

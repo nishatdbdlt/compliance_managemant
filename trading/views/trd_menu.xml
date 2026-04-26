@@ -9,6 +9,7 @@
     <menuitem id="trading_menu_expense" name="Expenses" parent="trading_menu_settings" action="action_expense" sequence="50"/>
     <menuitem id="trading_menu_payment" name="Payments_Method" parent="trading_menu_settings" action="action_payment" sequence="60"/>
     <menuitem id="trading_menu_sales" name="Sales" parent="trading_menu_root" action="action_trading_sales" sequence="15"/>
+    <menuitem id="trading_menu_purchase" name="Purchases" parent="trading_menu_root" action="action_trading_purchase" sequence="16"/>
     <menuitem id="trading_menu_product" name="Products" parent="trading_menu_root" action="action_trading_product" sequence="25"/>
 
         

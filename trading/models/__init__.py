@@ -6,3 +6,4 @@ from . import trd_product
 from . import trd_product_category
 from . import trd_stock_location
 from . import trd_purchase
+from . import trd_return

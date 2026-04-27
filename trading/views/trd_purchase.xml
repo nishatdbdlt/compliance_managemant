@@ -24,7 +24,7 @@
             <form string="Purchase">
                 <header>
                     <button name="action_confirm" string="Confirm" type="object" class="oe_highlight" invisible="state != 'draft'"/>
-                    <button name="action_print_report" string="Print" type="object" class="oe_highlight" invisible="state != 'confirmed'"/>
+                    <!-- <button name="action_print_report" string="Print" type="object" class="oe_highlight" invisible="state != 'confirmed'"/> -->
                     <field name="state" widget="statusbar" statusbar_visible="draft,confirmed"/>
                 </header>
                 <sheet>

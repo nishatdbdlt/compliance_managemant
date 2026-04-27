@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- List View -->
+    <record id="view_trd_return_list" model="ir.ui.view">
+        <field name="name">trd.returns.list</field>
+        <field name="model">trd.returns</field>
+        <field name="arch" type="xml">
+            <list string="Returns">
+                <field name="name"/>
+                <field name="return_type"/>
+                <field name="partner_id"/>
+                <field name="date"/>
+                <field name="total_amount"/>
+                <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-success="state == 'confirmed'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_trd_return_form" model="ir.ui.view">
+        <field name="name">trd.returns.form</field>
+        <field name="model">trd.returns</field>
+        <field name="arch" type="xml">
+            <form string="Return">
+                <header>
+                    <button name="action_confirm" string="Confirm" type="object" class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_cancel" string="Cancel" type="object" invisible="state != 'draft'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="return_type" widget="radio" options="{'horizontal': true}" readonly="state != 'draft'"/>
+                            <field name="partner_id" string="Customer" invisible="return_type != 'sales'" domain="[('is_customer', '=', True)]" readonly="state != 'draft'"/>
+                            <field name="partner_id" string="Supplier" invisible="return_type != 'purchase'" domain="[('is_vendor', '=', True)]" readonly="state != 'draft'"/>
+                        </group>
+                        <group>
+                            <field name="date" readonly="state != 'draft'"/>
+                            <field name="order_id_sales" invisible="return_type != 'sales'" required="return_type == 'sales'" readonly="state != 'draft'"/>
+                            <field name="order_id_purchase" invisible="return_type != 'purchase'" required="return_type == 'purchase'" readonly="state != 'draft'"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Return Lines">
+                            <field name="return_line_ids" readonly="state != 'draft'">
+                                <list editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="quantity"/>
+                                    <field name="price"/>
+                                    <field name="total" readonly="1"/>
+                                </list>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="total_amount" string="Total"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_trading_return" model="ir.actions.act_window">
+        <field name="name">Returns</field>
+        <field name="res_model">trd.returns</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new return!
+            </p>
+        </field>
+    </record>
+</odoo>

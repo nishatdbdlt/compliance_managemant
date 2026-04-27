@@ -26,4 +26,12 @@
             <field name="padding">5</field>
             <field name="company_id" eval="False"/>
         </record>
+
+        <record id="seq_trading_return" model="ir.sequence">
+            <field name="name">Trading Return</field>
+            <field name="code">trd.returns</field>
+            <field name="prefix">RTN/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
 </odoo>

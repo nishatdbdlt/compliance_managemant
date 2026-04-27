@@ -19,3 +19,7 @@ access_trd_purchase_admin,trd.purchase.admin,model_trd_purchase,trading.group_tr
 access_trd_purchase_user,trd.purchase.user,model_trd_purchase,trading.group_trading_user,1,0,0,0
 access_trd_purchase_line_admin,trd.purchase.line.admin,model_trd_purchase_line,trading.group_trading_admin,1,1,1,1
 access_trd_purchase_line_user,trd.purchase.line.user,model_trd_purchase_line,trading.group_trading_user,1,0,0,0
+access_trd_returns_admin,trd.returns.admin,model_trd_returns,trading.group_trading_admin,1,1,1,1
+access_trd_returns_user,trd.returns.user,model_trd_returns,trading.group_trading_user,1,0,0,0
+access_trd_returns_line_admin,trd.returns.line.admin,model_trd_returns_line,trading.group_trading_admin,1,1,1,1
+access_trd_returns_line_user,trd.returns.line.user,model_trd_returns_line,trading.group_trading_user,1,0,0,0

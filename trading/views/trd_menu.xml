@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <menuitem id="trading_menu_root" name="Trading" sequence="10"/>
-    <menuitem id="trading_menu_settings" name="Settings" parent="trading_menu_root" sequence="20"/>
-    <menuitem id="trading_menu_product_categories" name="Product Categories" parent="trading_menu_settings" action="action_product_category" sequence="10"/>
-    <menuitem id="trading_menu_stock" name="Stock Locations" parent="trading_menu_settings" action="action_stock_location" sequence="20"/>
-    <menuitem id="trading_menu_customer" name="Customers" parent="trading_menu_settings" action="action_customer" sequence="30"/>
-    <menuitem id="trading_menu_vendor" name="Suppliers"  parent="trading_menu_settings" action="action_vendor" sequence="40"/>
-    <menuitem id="trading_menu_expense" name="Expenses" parent="trading_menu_settings" action="action_expense" sequence="50"/>
-    <menuitem id="trading_menu_payment" name="Payments_Method" parent="trading_menu_settings" action="action_payment" sequence="60"/>
-    <menuitem id="trading_menu_sales" name="Sales" parent="trading_menu_root" action="action_trading_sales" sequence="15"/>
-    <menuitem id="trading_menu_purchase" name="Purchases" parent="trading_menu_root" action="action_trading_purchase" sequence="16"/>
-    <menuitem id="trading_menu_product" name="Products" parent="trading_menu_root" action="action_trading_product" sequence="25"/>
+    <data>
+        <menuitem id="trading_menu_root" name="Trading" sequence="10"/>
 
-        
-</odoo>
+        <menuitem id="trading_menu_sales" name="Sales Orders" parent="trading_menu_root" action="action_trading_sales" sequence="10"/>
+
+        <menuitem id="trading_menu_purchase" name="Purchase Orders" parent="trading_menu_root" action="action_trading_purchase" sequence="20"/>
+
+        <menuitem id="trading_menu_product" name="Products" parent="trading_menu_root" action="action_trading_product" sequence="30"/>
+
+        <menuitem id="trading_menu_returns" name="Returns" parent="trading_menu_root" action="action_trading_return" sequence="40"/>
+
+        <menuitem id="trading_menu_settings" name="Settings" parent="trading_menu_root" sequence="100"/>
+
+        <menuitem id="trading_menu_product_categories" name="Product Categories" parent="trading_menu_settings" action="action_product_category" sequence="10"/>
+        <menuitem id="trading_menu_customer" name="Customers" parent="trading_menu_settings" action="action_customer" sequence="20"/>
+        <menuitem id="trading_menu_vendor" name="Suppliers" parent="trading_menu_settings" action="action_vendor" sequence="30"/>
+        <menuitem id="trading_menu_stock" name="Stock Locations" parent="trading_menu_settings" action="action_stock_location" sequence="40"/>
+        <menuitem id="trading_menu_payment" name="Payment Methods" parent="trading_menu_settings" action="action_payment" sequence="50"/>
+        <menuitem id="trading_menu_expense" name="Expenses" parent="trading_menu_settings" action="action_expense" sequence="60"/>
+    </data>
+    </odoo>

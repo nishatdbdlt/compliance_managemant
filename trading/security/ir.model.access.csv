@@ -23,3 +23,5 @@ access_trd_returns_admin,trd.returns.admin,model_trd_returns,trading.group_tradi
 access_trd_returns_user,trd.returns.user,model_trd_returns,trading.group_trading_user,1,0,0,0
 access_trd_returns_line_admin,trd.returns.line.admin,model_trd_returns_line,trading.group_trading_admin,1,1,1,1
 access_trd_returns_line_user,trd.returns.line.user,model_trd_returns_line,trading.group_trading_user,1,0,0,0
+access_trd_transaction_admin,trd.transaction.admin,model_trd_transaction,trading.group_trading_admin,1,1,1,1
+access_trd_transaction_user,trd.transaction.user,model_trd_transaction,trading.group_trading_user,1,0,0,0

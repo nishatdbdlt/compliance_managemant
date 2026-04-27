@@ -6,6 +6,8 @@
         <menuitem id="trading_menu_sales" name="Sales Orders" parent="trading_menu_root" action="action_trading_sales" sequence="10"/>
 
         <menuitem id="trading_menu_purchase" name="Purchase Orders" parent="trading_menu_root" action="action_trading_purchase" sequence="20"/>
+        
+        <menuitem id="trading_menu_transaction" name="Transactions" parent="trading_menu_root" action="action_transaction" sequence="25"/>
 
         <menuitem id="trading_menu_product" name="Products" parent="trading_menu_root" action="action_trading_product" sequence="30"/>
 

@@ -31,6 +31,7 @@ Features:
         "views/trd_vendor.xml",
         "views/trd_expense.xml",
         "views/trd_payment.xml",
+        "views/trd_transaction.xml",
         "views/trd_product.xml",
         "views/trd_return_view.xml",
         "views/trd_menu.xml",

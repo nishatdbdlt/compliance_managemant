@@ -10,7 +10,8 @@
             <list string="Sales">
                 <field name="Sl_no"/>
                 <field name="customer_id"/>
-                <field name="total_amount"/>
+                <field name="total_amount" sum="Total"/>
+                <field name="paid_amount" sum="Total Paid"/>
                 <field name="state" widget="badge" decoration-success="state == 'confirmed'" decoration-info="state == 'draft'"/>
                 <field name="date"/>
                 <field name="Location"/>
@@ -26,10 +27,16 @@
             <form string="Sales">
                 <header>
                     <button name="action_confirm" string="Confirm" type="object" class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_register_payment" string="Register Payment" type="object" class="oe_highlight" invisible="state != 'confirmed'"/>
                     <!-- <button name="action_print_report" string="Print" type="object" class="oe_highlight" invisible="state != 'confirmed'"/> -->
                     <field name="state" widget="statusbar" statusbar_visible="draft,confirmed"/>
                 </header>
                 <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_payments" type="object" class="oe_stat_button" icon="fa-money">
+                            <field name="payment_count" widget="statinfo" string="Payments"/>
+                        </button>
+                    </div>
                     <div class="oe_title">
                         <h1>
                             <field name="Sl_no" readonly="1"/>
@@ -45,6 +52,7 @@
                         </group>
                         <group>
                             <field name="total_amount" readonly="1"/>
+                            <field name="paid_amount" readonly="1" widget="monetary" decoration-success="paid_amount == total_amount" decoration-warning="paid_amount &lt; total_amount and paid_amount &gt; 0"/>
                            </group>
                         </group>
                     <notebook>

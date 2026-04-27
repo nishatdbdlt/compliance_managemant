@@ -3,6 +3,7 @@ from odoo import fields, models, api, _
 class Sales(models.Model):
     _name = 'trd.sales'
     _description = 'Sales'
+    _rec_name = 'Sl_no'
 
     Sl_no = fields.Char(string='SI', required=True, copy=False, readonly=True, default=lambda self: _('New'))
     state = fields.Selection([
@@ -16,7 +17,9 @@ class Sales(models.Model):
     sale_line_ids = fields.One2many('trd.sales.line', 'sales_id', string='Order Lines')
     total_amount = fields.Float(string='Total Amount', compute='_compute_total_amount', store=True)
 
-    payment_id = fields.Many2one('trd.payment', string='Payment')
+    payment_ids = fields.One2many('trd.transaction', 'sale_id', string='Payments')
+    payment_count = fields.Integer(string='Payment Count', compute='_compute_payment_count')
+    paid_amount = fields.Float(string='Paid Amount', compute='_compute_paid_amount')
     category_id = fields.Many2one('trd.product.category', string='Category')
     stock_id = fields.Many2one('trd.stock.location', string='Stock')
     vendor_id = fields.Many2one('trd.contact', string='Vendor')
@@ -37,6 +40,41 @@ class Sales(models.Model):
             if rec.Sl_no == _('New'):
                 rec.Sl_no = self.env['ir.sequence'].next_by_code('trd.sales') or _('New')
             rec.state = 'confirmed'
+
+    def _compute_payment_count(self):
+        for rec in self:
+            rec.payment_count = len(rec.payment_ids)
+
+    def _compute_paid_amount(self):
+        for rec in self:
+            rec.paid_amount = sum(rec.payment_ids.filtered(lambda p: p.state == 'paid').mapped('amount'))
+
+    def action_view_payments(self):
+        self.ensure_one()
+        return {
+            'name': _('Payments'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'trd.transaction',
+            'view_mode': 'list,form',
+            'domain': [('sale_id', '=', self.id)],
+            'context': {'default_sale_id': self.id, 'default_partner_id': self.customer_id.id, 'default_amount': self.total_amount},
+        }
+
+    def action_register_payment(self):
+        self.ensure_one()
+        return {
+            'name': _('Register Payment'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'trd.transaction',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {
+                'default_sale_id': self.id,
+                'default_partner_id': self.customer_id.id,
+                'default_amount': self.total_amount,
+                'default_payment_date': fields.Date.context_today(self),
+            },
+        }
 
     def action_print_report(self):
         return self.env.ref('trading.action_report_trd_sales').report_action(self)

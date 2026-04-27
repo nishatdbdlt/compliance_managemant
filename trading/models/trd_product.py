@@ -3,6 +3,7 @@ from odoo import models, fields, api, _
 class TrandingProduct(models.Model):
     _name = 'trd.product'
     _description = 'trd product'
+    _rec_name = 'name'
 
     name = fields.Char(string='Name', required=True)
     sl_no = fields.Char(string='Serial Number', required=True, copy=False, readonly=True, default=lambda self: _('New'))

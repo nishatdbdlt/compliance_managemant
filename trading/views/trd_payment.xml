@@ -6,7 +6,7 @@
         <field name="model">trd.payment</field>
         <field name="arch" type="xml">
             <list string="Payments">
-                <field name="Name"/>
+                <field name="name"/>
                 <field name="amount"/>
             </list>
         </field>
@@ -20,7 +20,7 @@
             <form string="Payment">
                 <sheet>
                     <group>
-                        <field name="Name"/>
+                        <field name="name"/>
                         <field name="amount"/>
                     </group>
                 </sheet>

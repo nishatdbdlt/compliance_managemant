@@ -1,7 +1,5 @@
 from odoo import fields, models, api, _
 
-# print("DEBUG: trd_return.py loaded")
-
 class TradingReturn(models.Model):
     _name = 'trd.returns'
     _description = 'Trading Return'
@@ -14,14 +12,20 @@ class TradingReturn(models.Model):
     ], string='Return Type', default='sales', required=True)
     
     date = fields.Date(string='Return Date', default=fields.Date.today(), required=True)
-    
     partner_id = fields.Many2one('trd.contact', string='Contact', required=True)
     
-    order_id_sales = fields.Many2one('trd.sales', string='Sales Order', domain="[('state', '=', 'confirmed')]")
-    order_id_purchase = fields.Many2one('trd.purchase', string='Purchase Order', domain="[('state', '=', 'confirmed')]")
+    order_id_sales = fields.Many2one(
+        'trd.sales',
+        string='Sales Order',
+        domain="[('state', '=', 'confirmed')]"
+    )
+    order_id_purchase = fields.Many2one(
+        'trd.purchase',
+        string='Purchase Order',
+        domain="[('state', '=', 'confirmed')]"
+    )
     
     return_line_ids = fields.One2many('trd.returns.line', 'return_id', string='Return Lines')
-    
     total_amount = fields.Float(string='Total Amount', compute='_compute_total_amount', store=True)
     
     state = fields.Selection([
@@ -34,6 +38,60 @@ class TradingReturn(models.Model):
     def _compute_total_amount(self):
         for rec in self:
             rec.total_amount = sum(line.total for line in rec.return_line_ids)
+
+    @api.onchange('partner_id', 'return_type')
+    def _onchange_partner_id(self):
+        """Partner বা type change হলে order এবং lines clear করো"""
+        self.order_id_sales = False
+        self.order_id_purchase = False
+        self.return_line_ids = [(5, 0, 0)]
+
+        if self.partner_id and self.return_type == 'sales':
+            return {
+                'domain': {
+                    'order_id_sales': [
+                        ('customer_id', '=', self.partner_id.id),
+                        ('state', '=', 'confirmed')
+                    ]
+                }
+            }
+        elif self.partner_id and self.return_type == 'purchase':
+            return {
+                'domain': {
+                    'order_id_purchase': [
+                        ('supplier_id', '=', self.partner_id.id),
+                        ('state', '=', 'confirmed')
+                    ]
+                }
+            }
+
+    @api.onchange('order_id_sales')
+    def _onchange_order_id_sales(self):
+        """Sales order select করলে automatically সেই order এর lines আসবে"""
+        self.return_line_ids = [(5, 0, 0)]
+        if self.order_id_sales:
+            lines = []
+            for line in self.order_id_sales.sale_line_ids:
+                lines.append((0, 0, {
+                    'product_id': line.product_id.id,
+                    'quantity': line.quantity,
+                    'price': line.price,
+                }))
+            self.return_line_ids = lines
+
+    @api.onchange('order_id_purchase')
+    def _onchange_order_id_purchase(self):
+        """Purchase order select করলে automatically সেই order এর lines আসবে"""
+        self.return_line_ids = [(5, 0, 0)]
+        if self.order_id_purchase:
+            lines = []
+            for line in self.order_id_purchase.purchase_line_ids:
+                lines.append((0, 0, {
+                    'product_id': line.product_id.id,
+                    'quantity': line.quantity,
+                    'price': line.price,
+                }))
+            self.return_line_ids = lines
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -49,6 +107,7 @@ class TradingReturn(models.Model):
     def action_cancel(self):
         for rec in self:
             rec.state = 'cancelled'
+
 
 class TradingReturnLine(models.Model):
     _name = 'trd.returns.line'

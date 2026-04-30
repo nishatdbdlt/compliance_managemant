@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "Trading",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.1.0",
     "summary": "Simple trading management app for Odoo 18",
     "description": """
 Trading App
@@ -24,17 +24,18 @@ Features:
          "security/security.xml",
         "security/ir.model.access.csv",
         "data/ir_sequence_data.xml",
-        "views/trd_product_catagory.xml",
-        "views/trd_sales.xml",
-        "views/trd_purchase.xml",
-        "views/trd_stock.xml",
-        "views/trd_vendor.xml",
-        "views/trd_expense.xml",
-        "views/trd_payment.xml",
-        "views/trd_transaction.xml",
-        "views/trd_product.xml",
-        "views/trd_return_view.xml",
-        "views/trd_menu.xml",
+        "data/trd_cron_data.xml",
+        "views/trd_product_catagory_views.xml",
+        "views/trd_sales_views.xml",
+        "views/trd_purchase_views.xml",
+        "views/trd_stock_views.xml",
+        "views/trd_vendor_views.xml",
+        "views/trd_expense_views.xml",
+        "views/trd_payment_views.xml",
+        "views/trd_transaction_views.xml",
+        "views/trd_product_views.xml",
+        "views/trd_return_views.xml",
+        "views/trd_menu_views.xml",
        
     ],
     "installable": True,

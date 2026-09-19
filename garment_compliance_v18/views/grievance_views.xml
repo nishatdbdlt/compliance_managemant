@@ -1,0 +1,5 @@
+<odoo>
+ <record id="view_grievance_list" model="ir.ui.view"><field name="name">garment.compliance.grievance.list</field><field name="model">garment.compliance.grievance</field><field name="arch" type="xml"><list><field name="reference"/><field name="employee_id"/><field name="anonymous"/><field name="category"/><field name="assigned_id"/><field name="state"/></list></field></record>
+ <record id="view_grievance_form" model="ir.ui.view"><field name="name">garment.compliance.grievance.form</field><field name="model">garment.compliance.grievance</field><field name="arch" type="xml"><form><sheet><group><group><field name="reference"/><field name="employee_id" invisible="anonymous"/><field name="anonymous"/><field name="category"/></group><group><field name="assigned_id"/><field name="state"/></group></group><field name="description"/><field name="resolution"/></sheet><chatter/></form></field></record>
+ <record id="action_grievance" model="ir.actions.act_window"><field name="name">Worker Grievances</field><field name="res_model">garment.compliance.grievance</field><field name="view_mode">list,form</field></record>
+</odoo>

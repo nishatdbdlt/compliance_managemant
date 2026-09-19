@@ -1,0 +1,456 @@
+<odoo>
+    <!-- Policy / thresholds -->
+    <record id="view_compliance_policy_list" model="ir.ui.view">
+        <field name="name">garment.compliance.policy.list</field>
+        <field name="model">garment.compliance.policy</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="buyer_id"/>
+                <field name="standard_daily_hours"/>
+                <field name="max_daily_ot_hours"/>
+                <field name="max_weekly_hours"/>
+                <field name="minimum_gross_wage"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_compliance_policy_form" model="ir.ui.view">
+        <field name="name">garment.compliance.policy.form</field>
+        <field name="model">garment.compliance.policy</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title"><h1><field name="name"/></h1></div>
+                    <group>
+                        <group>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="buyer_id"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Working Hours / OT">
+                            <group>
+                                <group>
+                                    <field name="standard_daily_hours"/>
+                                    <field name="max_daily_ot_hours"/>
+                                    <field name="max_weekly_hours"/>
+                                </group>
+                                <group>
+                                    <field name="max_weekly_ot_hours"/>
+                                    <field name="max_continuous_workdays"/>
+                                    <field name="workhour_tolerance"/>
+                                </group>
+                            </group>
+                            <div class="text-muted">Configure these values from the applicable law, buyer code, and company policy before running automated checks.</div>
+                        </page>
+                        <page string="Wage / OT Payment">
+                            <group>
+                                <group>
+                                    <field name="minimum_gross_wage"/>
+                                    <field name="monthly_standard_hours"/>
+                                </group>
+                                <group>
+                                    <field name="overtime_multiplier"/>
+                                    <field name="wage_tolerance"/>
+                                </group>
+                            </group>
+                            <div class="text-muted">The module intentionally does not ship hard-coded statutory wage or hour limits.</div>
+                        </page>
+                        <page string="Source / Notes"><field name="notes"/></page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="action_compliance_policy" model="ir.actions.act_window">
+        <field name="name">Compliance Policies</field>
+        <field name="res_model">garment.compliance.policy</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Buyer checklist templates -->
+    <record id="view_checklist_template_list" model="ir.ui.view">
+        <field name="name">garment.compliance.checklist.template.list</field>
+        <field name="model">garment.compliance.checklist.template</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="buyer_id"/>
+                <field name="country_code"/>
+                <field name="audit_type"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_checklist_template_form" model="ir.ui.view">
+        <field name="name">garment.compliance.checklist.template.form</field>
+        <field name="model">garment.compliance.checklist.template</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_create_audit" string="Create Audit" type="object" class="btn-primary"/>
+                </header>
+                <sheet>
+                    <div class="oe_title"><h1><field name="name"/></h1></div>
+                    <group>
+                        <group>
+                            <field name="code"/>
+                            <field name="buyer_id"/>
+                            <field name="audit_type"/>
+                        </group>
+                        <group>
+                            <field name="country_code"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Checklist">
+                            <field name="line_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="section"/>
+                                    <field name="question"/>
+                                    <field name="severity"/>
+                                    <field name="evidence_required"/>
+                                    <field name="guidance" optional="hide"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes"><field name="notes"/></page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="action_checklist_template" model="ir.actions.act_window">
+        <field name="name">Checklist Templates</field>
+        <field name="res_model">garment.compliance.checklist.template</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Working hours -->
+    <record id="view_workhour_review_list" model="ir.ui.view">
+        <field name="name">garment.compliance.workhour.review.list</field>
+        <field name="model">garment.compliance.workhour.review</field>
+        <field name="arch" type="xml">
+            <list decoration-danger="non_compliant_count &gt; 0" decoration-success="state == 'closed' and non_compliant_count == 0">
+                <field name="name"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="buyer_id"/>
+                <field name="department_id"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="employee_count"/>
+                <field name="non_compliant_count"/>
+                <field name="compliance_rate" widget="percentage"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_workhour_review_form" model="ir.ui.view">
+        <field name="name">garment.compliance.workhour.review.form</field>
+        <field name="model">garment.compliance.workhour.review</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_load_attendance" string="Load Attendance" type="object" class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_review" string="Mark Reviewed" type="object" invisible="state != 'draft'"/>
+                    <button name="action_close" string="Close" type="object" class="btn-primary" invisible="state != 'reviewed'"/>
+                    <button name="action_reset_draft" string="Reset Draft" type="object" invisible="state == 'draft'" groups="garment_compliance_v18.group_compliance_manager"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title"><h1><field name="name"/></h1></div>
+                    <group>
+                        <group>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="buyer_id"/>
+                            <field name="department_id"/>
+                            <field name="policy_id" domain="[('company_id', '=', company_id), '|', ('buyer_id', '=', False), ('buyer_id', '=', buyer_id)]"/>
+                        </group>
+                        <group>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                            <field name="employee_count" readonly="1"/>
+                            <field name="non_compliant_count" readonly="1"/>
+                            <field name="compliance_rate" widget="percentage" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Employee Checks">
+                            <field name="line_ids">
+                                <list editable="bottom" decoration-danger="status == 'non_compliant'" decoration-success="status == 'compliant'">
+                                    <field name="employee_id"/>
+                                    <field name="department_id" optional="hide"/>
+                                    <field name="attendance_days"/>
+                                    <field name="regular_hours"/>
+                                    <field name="overtime_hours"/>
+                                    <field name="max_daily_ot_hours_observed"/>
+                                    <field name="max_weekly_hours_observed"/>
+                                    <field name="max_weekly_ot_hours_observed" optional="hide"/>
+                                    <field name="max_continuous_days"/>
+                                    <field name="status" readonly="1"/>
+                                    <field name="issue_reason" readonly="1" optional="hide"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes"><field name="notes"/></page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="view_workhour_review_graph" model="ir.ui.view">
+        <field name="name">garment.compliance.workhour.review.graph</field>
+        <field name="model">garment.compliance.workhour.review</field>
+        <field name="arch" type="xml"><graph string="Working Hour Compliance" type="bar"><field name="department_id"/><field name="compliance_rate" type="measure"/></graph></field>
+    </record>
+    <record id="action_workhour_review" model="ir.actions.act_window">
+        <field name="name">Working Hours &amp; OT</field>
+        <field name="res_model">garment.compliance.workhour.review</field>
+        <field name="view_mode">list,form,graph,pivot</field>
+    </record>
+
+    <!-- Wage review -->
+    <record id="view_wage_review_list" model="ir.ui.view">
+        <field name="name">garment.compliance.wage.review.list</field>
+        <field name="model">garment.compliance.wage.review</field>
+        <field name="arch" type="xml">
+            <list decoration-danger="non_compliant_count &gt; 0">
+                <field name="name"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="buyer_id"/>
+                <field name="department_id"/>
+                <field name="period_start"/>
+                <field name="period_end"/>
+                <field name="employee_count"/>
+                <field name="non_compliant_count"/>
+                <field name="compliance_rate" widget="percentage"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_wage_review_form" model="ir.ui.view">
+        <field name="name">garment.compliance.wage.review.form</field>
+        <field name="model">garment.compliance.wage.review</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_load_employees" string="Load Employees" type="object" class="btn-secondary" invisible="state != 'draft'"/>
+                    <button name="action_review" string="Mark Reviewed" type="object" class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_close" string="Close" type="object" class="btn-primary" invisible="state != 'reviewed'"/>
+                    <button name="action_reset_draft" string="Reset Draft" type="object" invisible="state == 'draft'" groups="garment_compliance_v18.group_compliance_manager"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title"><h1><field name="name"/></h1></div>
+                    <group>
+                        <group>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="buyer_id"/>
+                            <field name="department_id"/>
+                            <field name="policy_id" domain="[('company_id', '=', company_id), '|', ('buyer_id', '=', False), ('buyer_id', '=', buyer_id)]"/>
+                        </group>
+                        <group>
+                            <field name="period_start"/>
+                            <field name="period_end"/>
+                            <field name="employee_count" readonly="1"/>
+                            <field name="non_compliant_count" readonly="1"/>
+                            <field name="compliance_rate" widget="percentage" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Employee Wage Checks">
+                            <field name="line_ids">
+                                <list editable="bottom" decoration-danger="status == 'non_compliant'" decoration-success="status == 'compliant'">
+                                    <field name="employee_id"/>
+                                    <field name="department_id" optional="hide"/>
+                                    <field name="basic_wage"/>
+                                    <field name="gross_wage"/>
+                                    <field name="overtime_hours"/>
+                                    <field name="overtime_paid"/>
+                                    <field name="expected_overtime_pay" readonly="1"/>
+                                    <field name="wage_gap" readonly="1" optional="hide"/>
+                                    <field name="overtime_gap" readonly="1" optional="hide"/>
+                                    <field name="status" readonly="1"/>
+                                    <field name="issue_reason" readonly="1" optional="hide"/>
+                                    <field name="notes" optional="hide"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes"><field name="notes"/></page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="view_wage_review_graph" model="ir.ui.view">
+        <field name="name">garment.compliance.wage.review.graph</field>
+        <field name="model">garment.compliance.wage.review</field>
+        <field name="arch" type="xml"><graph string="Wage Compliance" type="bar"><field name="department_id"/><field name="compliance_rate" type="measure"/></graph></field>
+    </record>
+    <record id="action_wage_review" model="ir.actions.act_window">
+        <field name="name">Wage &amp; Salary Compliance</field>
+        <field name="res_model">garment.compliance.wage.review</field>
+        <field name="view_mode">list,form,graph,pivot</field>
+    </record>
+
+    <!-- Fire drill -->
+    <record id="view_fire_drill_list" model="ir.ui.view">
+        <field name="name">garment.compliance.fire.drill.list</field>
+        <field name="model">garment.compliance.fire.drill</field>
+        <field name="arch" type="xml">
+            <list decoration-warning="state == 'action'">
+                <field name="name"/>
+                <field name="drill_date"/>
+                <field name="drill_type"/>
+                <field name="department_id"/>
+                <field name="participant_count"/>
+                <field name="evacuation_minutes"/>
+                <field name="alarm_worked"/>
+                <field name="muster_complete"/>
+                <field name="next_drill_date"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_fire_drill_form" model="ir.ui.view">
+        <field name="name">garment.compliance.fire.drill.form</field>
+        <field name="model">garment.compliance.fire.drill</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_complete" string="Complete Drill" type="object" class="btn-primary" invisible="state != 'planned'"/>
+                    <button name="action_close" string="Close" type="object" class="btn-primary" invisible="state not in ['done', 'action']"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title"><h1><field name="name"/></h1></div>
+                    <group>
+                        <group>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="drill_date"/>
+                            <field name="drill_type"/>
+                            <field name="shift"/>
+                            <field name="department_id"/>
+                        </group>
+                        <group>
+                            <field name="planned_headcount"/>
+                            <field name="participant_count"/>
+                            <field name="evacuation_minutes"/>
+                            <field name="observer_id"/>
+                            <field name="responsible_id"/>
+                            <field name="next_drill_date"/>
+                        </group>
+                    </group>
+                    <group string="Drill Checks">
+                        <field name="alarm_worked"/>
+                        <field name="muster_complete"/>
+                        <field name="emergency_team_present"/>
+                    </group>
+                    <notebook>
+                        <page string="Findings &amp; Action"><field name="issues"/><field name="corrective_action"/></page>
+                        <page string="Photos / Evidence"><field name="attachment_ids" widget="many2many_binary"/></page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="action_fire_drill" model="ir.actions.act_window">
+        <field name="name">Fire / Emergency Drills</field>
+        <field name="res_model">garment.compliance.fire.drill</field>
+        <field name="view_mode">list,form,graph,pivot</field>
+    </record>
+
+    <!-- Equipment -->
+    <record id="view_equipment_list" model="ir.ui.view">
+        <field name="name">garment.compliance.equipment.list</field>
+        <field name="model">garment.compliance.equipment</field>
+        <field name="arch" type="xml">
+            <list decoration-danger="state in ['expired', 'out'] or condition == 'unsafe'" decoration-warning="state == 'due' or condition == 'attention'">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="equipment_type"/>
+                <field name="department_id"/>
+                <field name="location"/>
+                <field name="last_inspection_date"/>
+                <field name="next_inspection_date"/>
+                <field name="certificate_expiry_date"/>
+                <field name="condition"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_equipment_form" model="ir.ui.view">
+        <field name="name">garment.compliance.equipment.form</field>
+        <field name="model">garment.compliance.equipment</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_mark_inspected" string="Mark Inspected Today" type="object" class="btn-primary" invisible="state == 'out'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title"><h1><field name="name"/></h1><field name="code"/></div>
+                    <group>
+                        <group>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="equipment_type"/>
+                            <field name="department_id"/>
+                            <field name="location"/>
+                            <field name="serial_no"/>
+                        </group>
+                        <group>
+                            <field name="install_date"/>
+                            <field name="inspection_frequency_days"/>
+                            <field name="last_inspection_date"/>
+                            <field name="next_inspection_date"/>
+                            <field name="certificate_expiry_date"/>
+                            <field name="condition"/>
+                            <field name="responsible_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Certificates / Photos"><field name="attachment_ids" widget="many2many_binary"/></page>
+                        <page string="Notes"><field name="notes"/></page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <!-- <record id="view_equipment_search" model="ir.ui.view">
+        <field name="name">garment.compliance.equipment.search</field>
+        <field name="model">garment.compliance.equipment</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="location"/>
+                <filter string="Inspection Due" name="due" domain="[('state','=','due')]"/>
+                <filter string="Expired" name="expired" domain="[('state','=','expired')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Type" context="{'group_by':'equipment_type'}"/>
+                    <filter string="Department" context="{'group_by':'department_id'}"/>
+                    <filter string="State" context="{'group_by':'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record> -->
+    <record id="action_equipment" model="ir.actions.act_window">
+        <field name="name">Equipment Register</field>
+        <field name="res_model">garment.compliance.equipment</field>
+        <field name="view_mode">list,form,pivot</field>
+    </record>
+</odoo>

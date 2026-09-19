@@ -1,0 +1,54 @@
+<odoo>
+    <menuitem id="menu_compliance_root" name="Compliance" sequence="35" groups="group_compliance_user"/>
+    <menuitem id="menu_dashboard" name="KPI Dashboard" parent="menu_compliance_root" action="action_dashboard" sequence="1" groups="group_compliance_officer"/>
+
+    <menuitem id="menu_register_root" name="Compliance Register" parent="menu_compliance_root" sequence="10"/>
+    <menuitem id="menu_requirements" name="All Requirements" parent="menu_register_root" action="action_requirement" sequence="1"/>
+    <menuitem id="menu_certificate" name="Licenses &amp; Certificates" parent="menu_register_root" action="action_certificate" sequence="2"/>
+
+    <menuitem id="menu_buyer_root" name="Buyer Compliance" parent="menu_compliance_root" sequence="20"/>
+    <menuitem id="menu_buyers" name="Buyers" parent="menu_buyer_root" action="action_buyer" sequence="1"/>
+    <menuitem id="menu_checklist_templates" name="Buyer Checklist Templates" parent="menu_buyer_root" action="action_checklist_template" sequence="2"/>
+
+    <menuitem id="menu_social_root" name="Social Compliance" parent="menu_compliance_root" sequence="30"/>
+    <menuitem id="menu_workhour_review" name="Working Hours &amp; OT" parent="menu_social_root" action="action_workhour_review" sequence="1" groups="group_compliance_officer"/>
+    <menuitem id="menu_wage_review" name="Wage &amp; Salary Compliance" parent="menu_social_root" action="action_wage_review" sequence="2" groups="group_compliance_officer"/>
+    <menuitem id="menu_grievance" name="Worker Grievances" parent="menu_social_root" action="action_grievance" sequence="3" groups="group_compliance_officer"/>
+
+    <menuitem id="menu_audit_root" name="Audits &amp; CAPA" parent="menu_compliance_root" sequence="40"/>
+    <menuitem id="menu_audits" name="Audits" parent="menu_audit_root" action="action_audit" sequence="1"/>
+    <menuitem id="menu_findings" name="Audit Findings" parent="menu_audit_root" action="action_finding" sequence="2"/>
+    <menuitem id="menu_capa" name="Corrective Actions (CAPA)" parent="menu_audit_root" action="action_capa" sequence="3"/>
+
+    <menuitem id="menu_hse_root" name="Health &amp; Safety" parent="menu_compliance_root" sequence="50"/>
+    <menuitem id="menu_safety" name="Safety Inspections" parent="menu_hse_root" action="action_safety" sequence="1"/>
+    <menuitem id="menu_fire_drill" name="Fire / Emergency Drills" parent="menu_hse_root" action="action_fire_drill" sequence="2"/>
+    <menuitem id="menu_equipment" name="Equipment Register" parent="menu_hse_root" action="action_equipment" sequence="3"/>
+    <menuitem id="menu_incident" name="Accidents &amp; Incidents" parent="menu_hse_root" action="action_incident" sequence="4"/>
+
+    <menuitem id="menu_training" name="Training" parent="menu_compliance_root" action="action_training" sequence="60"/>
+    <menuitem id="menu_chemical" name="Chemical Register" parent="menu_compliance_root" action="action_chemical" sequence="70"/>
+    <menuitem id="menu_environment" name="Environment" parent="menu_compliance_root" action="action_environment" sequence="80"/>
+
+    <menuitem id="menu_configuration_root" name="Configuration" parent="menu_compliance_root" sequence="100" groups="group_compliance_manager"/>
+    <menuitem id="menu_policy" name="Compliance Policies / Limits" parent="menu_configuration_root" action="action_compliance_policy" sequence="1"/>
+
+    <menuitem id="menu_worker_docs" name="Worker Documents" parent="menu_social_root" action="action_worker_document" sequence="4" groups="group_compliance_officer"/>
+    <menuitem id="menu_ppe" name="PPE Issue &amp; Replacement" parent="menu_hse_root" action="action_ppe" sequence="5"/>
+
+    <menuitem id="menu_vendor_root" name="Vendor Compliance" parent="menu_compliance_root" sequence="85"/>
+    <menuitem id="menu_vendor" name="Vendors &amp; Subcontractors" parent="menu_vendor_root" action="action_vendor" sequence="1"/>
+
+    <menuitem id="menu_governance_root" name="Governance &amp; Documents" parent="menu_compliance_root" sequence="86"/>
+    <menuitem id="menu_documents" name="Policies / SOPs" parent="menu_governance_root" action="action_document" sequence="1"/>
+    <menuitem id="menu_committees" name="Committees" parent="menu_governance_root" action="action_committee" sequence="2"/>
+    <menuitem id="menu_meetings" name="Committee Meetings" parent="menu_governance_root" action="action_meeting" sequence="3"/>
+    <menuitem id="menu_meeting_actions" name="Meeting Action Tracker" parent="menu_governance_root" action="action_meeting_action" sequence="4"/>
+
+    <menuitem id="menu_risk_legal_root" name="Risk &amp; Legal" parent="menu_compliance_root" sequence="87"/>
+    <menuitem id="menu_risk_register" name="Risk Register" parent="menu_risk_legal_root" action="action_risk" sequence="1"/>
+    <menuitem id="menu_legal_register" name="Legal Requirement Register" parent="menu_risk_legal_root" action="action_legal" sequence="2"/>
+
+    <menuitem id="menu_training_matrix" name="Training Matrix" parent="menu_configuration_root" action="action_training_matrix" sequence="2"/>
+
+</odoo>

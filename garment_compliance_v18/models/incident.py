@@ -1,0 +1,5 @@
+from odoo import fields, models
+class GarmentComplianceIncident(models.Model):
+    _name='garment.compliance.incident'; _description='Accident and Incident'; _inherit=['mail.thread','mail.activity.mixin']; _order='incident_date desc'
+    name=fields.Char(required=True); employee_id=fields.Many2one('hr.employee'); incident_date=fields.Datetime(required=True,default=fields.Datetime.now); location=fields.Char(); incident_type=fields.Selection([('accident','Accident'),('near_miss','Near Miss'),('injury','Injury'),('property','Property Damage'),('other','Other')],default='accident')
+    description=fields.Text(required=True); immediate_action=fields.Text(); root_cause=fields.Text(); medical_treatment=fields.Text(); lost_work_days=fields.Integer(); corrective_action=fields.Text(); responsible_id=fields.Many2one('res.users'); state=fields.Selection([('open','Open'),('investigation','Investigation'),('action','Action'),('closed','Closed')],default='open',tracking=True); attachment_ids=fields.Many2many('ir.attachment')

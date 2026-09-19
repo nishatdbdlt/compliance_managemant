@@ -1,0 +1,10 @@
+<odoo noupdate="1">
+    <record id="seq_requirement" model="ir.sequence"><field name="name">Compliance Requirement</field><field name="code">garment.compliance.requirement</field><field name="prefix">CMP-</field><field name="padding">5</field></record>
+    <record id="seq_audit" model="ir.sequence"><field name="name">Compliance Audit</field><field name="code">garment.compliance.audit</field><field name="prefix">AUD-</field><field name="padding">5</field></record>
+    <record id="seq_capa" model="ir.sequence"><field name="name">CAPA</field><field name="code">garment.compliance.capa</field><field name="prefix">CAPA-</field><field name="padding">5</field></record>
+    <record id="seq_grievance" model="ir.sequence"><field name="name">Worker Grievance</field><field name="code">garment.compliance.grievance</field><field name="prefix">GRV-</field><field name="padding">5</field></record>
+    <record id="seq_workhour_review" model="ir.sequence"><field name="name">Working Hour Review</field><field name="code">garment.compliance.workhour.review</field><field name="prefix">WHR-</field><field name="padding">5</field></record>
+    <record id="seq_wage_review" model="ir.sequence"><field name="name">Wage Review</field><field name="code">garment.compliance.wage.review</field><field name="prefix">WGR-</field><field name="padding">5</field></record>
+    <record id="seq_fire_drill" model="ir.sequence"><field name="name">Fire Drill</field><field name="code">garment.compliance.fire.drill</field><field name="prefix">DRL-</field><field name="padding">5</field></record>
+    <record id="seq_equipment" model="ir.sequence"><field name="name">Compliance Equipment</field><field name="code">garment.compliance.equipment</field><field name="prefix">EQP-</field><field name="padding">5</field></record>
+</odoo>

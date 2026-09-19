@@ -1,0 +1,46 @@
+<odoo noupdate="1">
+    <record id="cron_requirement_expiry" model="ir.cron">
+        <field name="name">Compliance: Update Requirement Expiry</field>
+        <field name="model_id" ref="model_garment_compliance_requirement"/>
+        <field name="state">code</field><field name="code">model._cron_update_expiry_states()</field>
+        <field name="interval_number">1</field><field name="interval_type">days</field><field name="active">True</field>
+    </record>
+    <record id="cron_certificate_expiry" model="ir.cron">
+        <field name="name">Compliance: Check Certificate Expiry</field>
+        <field name="model_id" ref="model_garment_compliance_certificate"/>
+        <field name="state">code</field><field name="code">model._cron_check_expiry()</field>
+        <field name="interval_number">1</field><field name="interval_type">days</field><field name="active">True</field>
+    </record>
+    <record id="cron_equipment_due" model="ir.cron">
+        <field name="name">Compliance: Check Equipment Inspection Due</field>
+        <field name="model_id" ref="model_garment_compliance_equipment"/>
+        <field name="state">code</field><field name="code">model._cron_check_due()</field>
+        <field name="interval_number">1</field><field name="interval_type">days</field><field name="active">True</field>
+    </record>
+
+    <record id="cron_vendor_compliance_due" model="ir.cron">
+        <field name="name">Compliance: Vendor Audit / Certificate Due</field>
+        <field name="model_id" ref="model_garment_compliance_vendor"/>
+        <field name="state">code</field><field name="code">model._cron_vendor_due()</field>
+        <field name="interval_number">1</field><field name="interval_type">days</field><field name="active">True</field>
+    </record>
+    <record id="cron_document_review_due" model="ir.cron">
+        <field name="name">Compliance: Controlled Document Review Due</field>
+        <field name="model_id" ref="model_garment_compliance_document"/>
+        <field name="state">code</field><field name="code">model._cron_document_review()</field>
+        <field name="interval_number">1</field><field name="interval_type">days</field><field name="active">True</field>
+    </record>
+    <record id="cron_ppe_replacement_due" model="ir.cron">
+        <field name="name">Compliance: PPE Replacement Due</field>
+        <field name="model_id" ref="model_garment_compliance_ppe_issue"/>
+        <field name="state">code</field><field name="code">model._cron_ppe_due()</field>
+        <field name="interval_number">1</field><field name="interval_type">days</field><field name="active">True</field>
+    </record>
+    <record id="cron_capa_overdue_escalation" model="ir.cron">
+        <field name="name">Compliance: Overdue CAPA Escalation</field>
+        <field name="model_id" ref="model_garment_compliance_capa"/>
+        <field name="state">code</field><field name="code">model._cron_escalate_overdue()</field>
+        <field name="interval_number">1</field><field name="interval_type">days</field><field name="active">True</field>
+    </record>
+
+</odoo>

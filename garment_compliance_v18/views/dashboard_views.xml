@@ -1,0 +1,60 @@
+<odoo>
+    <record id="view_company_compliance_dashboard_kanban" model="ir.ui.view">
+        <field name="name">res.company.garment.compliance.dashboard.kanban</field>
+        <field name="model">res.company</field>
+        <field name="arch" type="xml">
+            <kanban create="false" edit="false">
+                <field name="name"/>
+                <field name="gc_requirement_total"/>
+                <field name="gc_compliant"/>
+                <field name="gc_non_compliant"/>
+                <field name="gc_expiring"/>
+                <field name="gc_open_capa"/>
+                <field name="gc_overdue_capa"/>
+                <field name="gc_critical_findings"/>
+                <field name="gc_upcoming_audits"/>
+                <field name="gc_equipment_due"/>
+                <field name="gc_training_due"/>
+                <field name="gc_workhour_rate"/>
+                <field name="gc_wage_rate"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="p-3">
+                            <h3><field name="name"/></h3>
+                            <div class="row mt-3">
+                                <div class="col-6 mb-2"><strong>Requirements</strong><br/><field name="gc_requirement_total"/></div>
+                                <div class="col-6 mb-2"><strong>Compliant</strong><br/><field name="gc_compliant"/></div>
+                                <div class="col-6 mb-2"><strong>Non-Compliant / Expired</strong><br/><field name="gc_non_compliant"/></div>
+                                <div class="col-6 mb-2"><strong>Expiring</strong><br/><field name="gc_expiring"/></div>
+                                <div class="col-6 mb-2"><strong>Open CAPA</strong><br/><field name="gc_open_capa"/></div>
+                                <div class="col-6 mb-2"><strong>Overdue CAPA</strong><br/><field name="gc_overdue_capa"/></div>
+                                <div class="col-6 mb-2"><strong>Critical Findings</strong><br/><field name="gc_critical_findings"/></div>
+                                <div class="col-6 mb-2"><strong>Audits Next 30 Days</strong><br/><field name="gc_upcoming_audits"/></div>
+                                <div class="col-6 mb-2"><strong>Equipment Due</strong><br/><field name="gc_equipment_due"/></div>
+                                <div class="col-6 mb-2"><strong>Training Due</strong><br/><field name="gc_training_due"/></div>
+                            </div>
+                            <hr/>
+                            <div class="row">
+                                <div class="col-6"><strong>Latest Working Hour Compliance</strong><br/><field name="gc_workhour_rate"/>%</div>
+                                <div class="col-6"><strong>Latest Wage Compliance</strong><br/><field name="gc_wage_rate"/>%</div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="action_dashboard" model="ir.actions.act_window">
+        <field name="name">Compliance KPI Dashboard</field>
+        <field name="res_model">res.company</field>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="view_company_compliance_dashboard_kanban"/>
+    </record>
+
+    <record id="view_requirement_graph" model="ir.ui.view">
+        <field name="name">garment.compliance.requirement.graph</field>
+        <field name="model">garment.compliance.requirement</field>
+        <field name="arch" type="xml"><graph string="Compliance Overview" type="bar"><field name="state"/><field name="id" type="measure"/></graph></field>
+    </record>
+</odoo>

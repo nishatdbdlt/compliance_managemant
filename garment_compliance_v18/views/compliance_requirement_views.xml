@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_requirement_list" model="ir.ui.view">
+        <field name="name">garment.compliance.requirement.list</field>
+        <field name="model">garment.compliance.requirement</field>
+        <field name="arch" type="xml">
+            <list decoration-danger="state == 'expired' or state == 'non_compliant'"
+                  decoration-warning="state == 'expiring'"
+                  decoration-success="state == 'compliant'">
+                <field name="reference"/>
+                <field name="name"/>
+                <field name="category"/>
+                <field name="buyer_id"/>
+                <field name="department_id"/>
+                <field name="responsible_id"/>
+                <field name="expiry_date"/>
+                <field name="risk_level"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_requirement_form" model="ir.ui.view">
+        <field name="name">garment.compliance.requirement.form</field>
+        <field name="model">garment.compliance.requirement</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_submit" string="Submit" type="object"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_review" string="Start Review" type="object"
+                            invisible="state != 'pending'"/>
+                    <button name="action_compliant" string="Mark Compliant" type="object"
+                            class="btn-primary" invisible="state not in ['review','corrective','expiring']"/>
+                    <button name="action_non_compliant" string="Non-Compliant" type="object"
+                            invisible="state != 'review'"/>
+                    <button name="action_corrective" string="Corrective Action" type="object"
+                            invisible="state != 'non_compliant'"/>
+                    <button name="action_reset_draft" string="Reset Draft" type="object"
+                            groups="garment_compliance_v18.group_compliance_manager"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name"/></h1>
+                        <field name="reference"/>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="category"/>
+                            <field name="buyer_id"/>
+                            <field name="department_id"/>
+                            <field name="responsible_id"/>
+                            <field name="authority"/>
+                        </group>
+                        <group>
+                            <field name="risk_level"/>
+                            <field name="priority" widget="priority"/>
+                            <field name="issue_date"/>
+                            <field name="effective_date"/>
+                            <field name="review_date"/>
+                            <field name="expiry_date"/>
+                            <field name="compliance_score"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Requirement">
+                            <field name="description"/>
+                        </page>
+                        <page string="Evidence">
+                            <field name="attachment_ids" widget="many2many_binary"/>
+                        </page>
+                        <page string="Notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- <record id="view_requirement_search" model="ir.ui.view">
+        <field name="name">garment.compliance.requirement.search</field>
+        <field name="model">garment.compliance.requirement</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="reference"/>
+                <field name="buyer_id"/>
+                <field name="responsible_id"/>
+                <filter name="expiring" string="Expiring" domain="[('state','=','expiring')]"/>
+                <filter name="expired" string="Expired" domain="[('state','=','expired')]"/>
+                <filter name="non_compliant" string="Non-Compliant" domain="[('state','=','non_compliant')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Category" context="{'group_by':'category'}"/>
+                    <filter string="Department" context="{'group_by':'department_id'}"/>
+                    <filter string="Buyer" context="{'group_by':'buyer_id'}"/>
+                    <filter string="State" context="{'group_by':'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record> -->
+
+    <record id="action_requirement" model="ir.actions.act_window">
+        <field name="name">Compliance Requirements</field>
+        <field name="res_model">garment.compliance.requirement</field>
+        <field name="view_mode">list,form,graph,pivot</field>
+       
+    </record>
+
+</odoo>

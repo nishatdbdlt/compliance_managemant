@@ -1,0 +1,145 @@
+<odoo>
+    <record id="view_vendor_list" model="ir.ui.view">
+        <field name="name">garment.compliance.vendor.list</field>
+        <field name="model">garment.compliance.vendor</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/><field name="vendor_type"/><field name="risk_level"/>
+                <field name="approval_status"/><field name="next_audit_date"/><field name="certificate_expiry"/>
+                <field name="responsible_id"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_vendor_form" model="ir.ui.view">
+        <field name="name">garment.compliance.vendor.form</field>
+        <field name="model">garment.compliance.vendor</field>
+        <field name="arch" type="xml">
+            <form string="Vendor Compliance">
+                <header>
+                    <button name="action_submit" type="object" string="Submit"/>
+                    <button name="action_approve" type="object" string="Approve" groups="garment_compliance_v18.group_compliance_manager"/>
+                    <button name="action_block" type="object" string="Block" groups="garment_compliance_v18.group_compliance_manager"/>
+                    <field name="approval_status" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group><field name="name"/><field name="partner_id"/><field name="vendor_type"/><field name="company_id"/></group>
+                        <group><field name="responsible_id"/><field name="risk_level"/><field name="score"/><field name="next_audit_date"/><field name="certificate_expiry"/></group>
+                    </group>
+                    <notebook>
+                        <page string="Scope"><field name="scope"/><field name="notes"/></page>
+                        <page string="Documents"><field name="attachment_ids" widget="many2many_binary"/></page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="action_vendor" model="ir.actions.act_window">
+        <field name="name">Vendors &amp; Subcontractors</field><field name="res_model">garment.compliance.vendor</field><field name="view_mode">list,form</field>
+    </record>
+
+    <record id="view_document_list" model="ir.ui.view">
+        <field name="name">garment.compliance.document.list</field><field name="model">garment.compliance.document</field>
+        <field name="arch" type="xml"><list><field name="code"/><field name="name"/><field name="document_type"/><field name="version"/><field name="effective_date"/><field name="review_date"/><field name="state"/></list></field>
+    </record>
+    <record id="view_document_form" model="ir.ui.view">
+        <field name="name">garment.compliance.document.form</field><field name="model">garment.compliance.document</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_review" type="object" string="Submit for Review"/>
+                    <button name="action_approve" type="object" string="Approve" groups="garment_compliance_v18.group_compliance_manager"/>
+                    <button name="action_obsolete" type="object" string="Mark Obsolete" groups="garment_compliance_v18.group_compliance_manager"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group><group><field name="code"/><field name="name"/><field name="document_type"/><field name="version"/></group>
+                    <group><field name="company_id"/><field name="owner_id"/><field name="department_id"/><field name="effective_date"/><field name="review_date"/><field name="supersedes_id"/></group></group>
+                    <notebook><page string="Files"><field name="attachment_ids" widget="many2many_binary"/></page><page string="Notes"><field name="notes"/></page></notebook>
+                </sheet><chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="action_document" model="ir.actions.act_window"><field name="name">Controlled Documents &amp; SOPs</field><field name="res_model">garment.compliance.document</field><field name="view_mode">list,form</field></record>
+
+    <record id="view_legal_list" model="ir.ui.view">
+        <field name="name">garment.compliance.legal.list</field><field name="model">garment.compliance.legal</field>
+        <field name="arch" type="xml"><list><field name="name"/><field name="authority"/><field name="reference"/><field name="category"/><field name="department_id"/><field name="responsible_id"/><field name="next_review_date"/><field name="state"/></list></field>
+    </record>
+    <record id="view_legal_form" model="ir.ui.view">
+        <field name="name">garment.compliance.legal.form</field><field name="model">garment.compliance.legal</field>
+        <field name="arch" type="xml"><form><sheet><group><group><field name="name"/><field name="authority"/><field name="reference"/><field name="category"/><field name="company_id"/></group><group><field name="department_id"/><field name="responsible_id"/><field name="applicable"/><field name="last_review_date"/><field name="next_review_date"/><field name="state"/></group></group><notebook><page string="Requirement"><field name="requirement"/></page><page string="Evidence"><field name="evidence"/><field name="attachment_ids" widget="many2many_binary"/></page></notebook></sheet><chatter/></form></field>
+    </record>
+    <record id="action_legal" model="ir.actions.act_window"><field name="name">Legal Requirement Register</field><field name="res_model">garment.compliance.legal</field><field name="view_mode">list,form</field></record>
+
+    <record id="view_worker_document_list" model="ir.ui.view">
+        <field name="name">garment.compliance.worker.document.list</field><field name="model">garment.compliance.worker.document</field>
+        <field name="arch" type="xml"><list><field name="employee_id"/><field name="document_type"/><field name="document_no"/><field name="issue_date"/><field name="expiry_date"/><field name="verified"/><field name="verified_by"/></list></field>
+    </record>
+    <record id="view_worker_document_form" model="ir.ui.view">
+        <field name="name">garment.compliance.worker.document.form</field><field name="model">garment.compliance.worker.document</field>
+        <field name="arch" type="xml"><form><header><button name="action_verify" type="object" string="Verify" groups="garment_compliance_v18.group_compliance_officer"/></header><sheet><group><group><field name="employee_id"/><field name="company_id" readonly="1"/><field name="document_type"/><field name="document_no"/></group><group><field name="issue_date"/><field name="expiry_date"/><field name="verified"/><field name="verified_by" readonly="1"/><field name="verified_date" readonly="1"/></group></group><field name="attachment_ids" widget="many2many_binary"/><field name="notes"/></sheet><chatter/></form></field>
+    </record>
+    <record id="action_worker_document" model="ir.actions.act_window"><field name="name">Worker Document Compliance</field><field name="res_model">garment.compliance.worker.document</field><field name="view_mode">list,form</field></record>
+
+    <record id="view_ppe_list" model="ir.ui.view">
+        <field name="name">garment.compliance.ppe.issue.list</field><field name="model">garment.compliance.ppe.issue</field>
+        <field name="arch" type="xml"><list><field name="employee_id"/><field name="department_id"/><field name="ppe_type"/><field name="quantity"/><field name="issue_date"/><field name="replacement_date"/><field name="condition"/></list></field>
+    </record>
+    <record id="view_ppe_form" model="ir.ui.view">
+        <field name="name">garment.compliance.ppe.issue.form</field><field name="model">garment.compliance.ppe.issue</field>
+        <field name="arch" type="xml"><form><sheet><group><group><field name="employee_id"/><field name="company_id" readonly="1"/><field name="department_id" readonly="1"/><field name="ppe_type"/><field name="quantity"/></group><group><field name="issue_date"/><field name="replacement_date"/><field name="issued_by"/><field name="condition"/></group></group><field name="notes"/></sheet><chatter/></form></field>
+    </record>
+    <record id="action_ppe" model="ir.actions.act_window"><field name="name">PPE Issue &amp; Replacement</field><field name="res_model">garment.compliance.ppe.issue</field><field name="view_mode">list,form</field></record>
+
+    <record id="view_committee_list" model="ir.ui.view">
+        <field name="name">garment.compliance.committee.list</field><field name="model">garment.compliance.committee</field>
+        <field name="arch" type="xml"><list><field name="name"/><field name="committee_type"/><field name="chairperson_id"/><field name="frequency"/><field name="next_meeting_date"/><field name="active"/></list></field>
+    </record>
+    <record id="view_committee_form" model="ir.ui.view">
+        <field name="name">garment.compliance.committee.form</field><field name="model">garment.compliance.committee</field>
+        <field name="arch" type="xml"><form><sheet><group><group><field name="name"/><field name="committee_type"/><field name="company_id"/><field name="chairperson_id"/></group><group><field name="frequency"/><field name="next_meeting_date"/><field name="active"/></group></group><field name="member_ids" widget="many2many_tags"/><field name="notes"/></sheet><chatter/></form></field>
+    </record>
+    <record id="action_committee" model="ir.actions.act_window"><field name="name">Committees</field><field name="res_model">garment.compliance.committee</field><field name="view_mode">list,form</field></record>
+
+    <record id="view_meeting_list" model="ir.ui.view">
+        <field name="name">garment.compliance.meeting.list</field><field name="model">garment.compliance.meeting</field>
+        <field name="arch" type="xml"><list><field name="name"/><field name="committee_id"/><field name="meeting_date"/></list></field>
+    </record>
+    <record id="view_meeting_form" model="ir.ui.view">
+        <field name="name">garment.compliance.meeting.form</field><field name="model">garment.compliance.meeting</field>
+        <field name="arch" type="xml"><form><sheet><group><field name="name"/><field name="committee_id"/><field name="meeting_date"/></group><field name="attendee_ids" widget="many2many_tags"/><notebook><page string="Minutes"><field name="minutes"/></page><page string="Actions"><field name="action_ids"><list editable="bottom"><field name="name"/><field name="responsible_id"/><field name="due_date"/><field name="state"/></list></field></page><page string="Attachments"><field name="attachment_ids" widget="many2many_binary"/></page></notebook></sheet><chatter/></form></field>
+    </record>
+    <record id="action_meeting" model="ir.actions.act_window"><field name="name">Committee Meetings</field><field name="res_model">garment.compliance.meeting</field><field name="view_mode">list,form</field></record>
+
+    <record id="view_meeting_action_list" model="ir.ui.view">
+        <field name="name">garment.compliance.meeting.action.list</field><field name="model">garment.compliance.meeting.action</field>
+        <field name="arch" type="xml"><list><field name="name"/><field name="meeting_id"/><field name="responsible_id"/><field name="due_date"/><field name="state"/></list></field>
+    </record>
+    <record id="view_meeting_action_form" model="ir.ui.view">
+        <field name="name">garment.compliance.meeting.action.form</field><field name="model">garment.compliance.meeting.action</field>
+        <field name="arch" type="xml"><form><sheet><group><field name="name"/><field name="meeting_id"/><field name="responsible_id"/><field name="due_date"/><field name="state"/></group><field name="evidence_ids" widget="many2many_binary"/><field name="notes"/></sheet><chatter/></form></field>
+    </record>
+    <record id="action_meeting_action" model="ir.actions.act_window"><field name="name">Meeting Action Tracker</field><field name="res_model">garment.compliance.meeting.action</field><field name="view_mode">list,form</field></record>
+
+    <record id="view_training_matrix_list" model="ir.ui.view">
+        <field name="name">garment.compliance.training.matrix.list</field><field name="model">garment.compliance.training.matrix</field>
+        <field name="arch" type="xml"><list><field name="name"/><field name="department_id"/><field name="job_title"/><field name="training_type"/><field name="validity_months"/><field name="mandatory"/></list></field>
+    </record>
+    <record id="view_training_matrix_form" model="ir.ui.view">
+        <field name="name">garment.compliance.training.matrix.form</field><field name="model">garment.compliance.training.matrix</field>
+        <field name="arch" type="xml"><form><sheet><group><field name="name"/><field name="company_id"/><field name="department_id"/><field name="job_title"/><field name="training_type"/><field name="validity_months"/><field name="mandatory"/></group><field name="notes"/></sheet><chatter/></form></field>
+    </record>
+    <record id="action_training_matrix" model="ir.actions.act_window"><field name="name">Training Matrix</field><field name="res_model">garment.compliance.training.matrix</field><field name="view_mode">list,form</field></record>
+
+    <record id="view_risk_list" model="ir.ui.view">
+        <field name="name">garment.compliance.risk.list</field><field name="model">garment.compliance.risk</field>
+        <field name="arch" type="xml"><list><field name="name"/><field name="category"/><field name="department_id"/><field name="owner_id"/><field name="probability"/><field name="impact"/><field name="risk_score"/><field name="risk_level"/><field name="target_date"/><field name="state"/></list></field>
+    </record>
+    <record id="view_risk_form" model="ir.ui.view">
+        <field name="name">garment.compliance.risk.form</field><field name="model">garment.compliance.risk</field>
+        <field name="arch" type="xml"><form><sheet><group><group><field name="name"/><field name="company_id"/><field name="category"/><field name="department_id"/><field name="owner_id"/></group><group><field name="probability"/><field name="impact"/><field name="risk_score" readonly="1"/><field name="risk_level" readonly="1"/><field name="target_date"/><field name="state"/></group></group><field name="mitigation"/><field name="attachment_ids" widget="many2many_binary"/></sheet><chatter/></form></field>
+    </record>
+    <record id="action_risk" model="ir.actions.act_window"><field name="name">Risk Register</field><field name="res_model">garment.compliance.risk</field><field name="view_mode">list,form,graph,pivot</field></record>
+</odoo>

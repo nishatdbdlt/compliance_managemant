@@ -1,0 +1,50 @@
+<odoo>
+    <record id="action_report_compliance_audit" model="ir.actions.report">
+        <field name="name">Compliance Audit Report</field>
+        <field name="model">compliance.audit</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">garments_compliance.report_compliance_audit</field>
+        <field name="report_file">garments_compliance.report_compliance_audit</field>
+        <field name="binding_model_id" ref="model_compliance_audit"/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">'Compliance Audit - %s' % (object.name)</field>
+    </record>
+
+    <template id="report_compliance_audit">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Compliance Audit Report</h2>
+                        <table class="table table-sm table-borderless">
+                            <tbody>
+                                <tr><td><strong>Audit:</strong></td><td><span t-field="o.name"/></td><td><strong>Date:</strong></td><td><span t-field="o.audit_date"/></td></tr>
+                                <tr><td><strong>Factory:</strong></td><td><span t-field="o.factory_id"/></td><td><strong>Standard:</strong></td><td><span t-field="o.standard_id"/></td></tr>
+                                <tr><td><strong>Buyer / Organization:</strong></td><td><span t-field="o.buyer_id"/></td><td><strong>Auditor:</strong></td><td><span t-field="o.auditor_id"/></td></tr>
+                            </tbody>
+                        </table>
+                        <h3>Result</h3>
+                        <table class="table table-sm table-bordered">
+                            <thead><tr><th>Weighted Score</th><th>Grade</th><th>Compliant</th><th>Partial</th><th>Non-Compliant</th><th>Open Findings</th></tr></thead>
+                            <tbody><tr><td><span t-esc="'%.2f%%' % o.compliance_rate"/></td><td><strong><span t-field="o.grade"/></strong></td><td><span t-field="o.compliant_items"/></td><td><span t-field="o.partial_items"/></td><td><span t-field="o.noncompliant_items"/></td><td><span t-field="o.open_finding_count"/></td></tr></tbody>
+                        </table>
+                        <h3>Checklist</h3>
+                        <table class="table table-sm table-bordered">
+                            <thead><tr><th>#</th><th>Requirement</th><th>Severity</th><th>Result</th><th>Remarks</th></tr></thead>
+                            <tbody>
+                                <tr t-foreach="o.checklist_line_ids" t-as="line">
+                                    <td><span t-field="line.sequence"/></td><td><strong><span t-field="line.name"/></strong><br/><span t-field="line.requirement"/></td><td><span t-field="line.severity"/></td><td><span t-field="line.result"/></td><td><span t-field="line.remarks"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <h3 t-if="o.finding_ids">Findings</h3>
+                        <table class="table table-sm table-bordered" t-if="o.finding_ids">
+                            <thead><tr><th>Reference</th><th>Finding</th><th>Severity</th><th>Responsible</th><th>Deadline</th><th>Status</th></tr></thead>
+                            <tbody><tr t-foreach="o.finding_ids" t-as="finding"><td><span t-field="finding.reference"/></td><td><span t-field="finding.name"/></td><td><span t-field="finding.severity"/></td><td><span t-field="finding.responsible_id"/></td><td><span t-field="finding.deadline"/></td><td><span t-field="finding.state"/></td></tr></tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

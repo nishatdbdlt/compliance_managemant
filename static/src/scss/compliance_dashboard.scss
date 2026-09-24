@@ -1,0 +1,5 @@
+.o_gc_dashboard { max-width: 1500px; margin: 0 auto; }
+.o_gc_card { width:100%; min-height:120px; border:1px solid var(--border-color, #ddd); border-radius:12px; background:var(--o-view-background-color, #fff); padding:18px; text-align:left; display:flex; flex-direction:column; justify-content:space-between; }
+.o_gc_card span,.o_gc_score span { color:#6c757d; } .o_gc_card strong { font-size:2rem; }
+.o_gc_score { min-width:180px; padding:12px 18px; border-radius:12px; border:1px solid var(--border-color, #ddd); display:flex; flex-direction:column; } .o_gc_score strong{font-size:1.5rem;}
+.o_gc_grade {border:1px solid var(--border-color, #ddd); border-radius:12px; padding:20px; display:flex; justify-content:space-between; align-items:center;} .o_gc_grade span{font-size:1.6rem;font-weight:700}.o_gc_grade strong{font-size:2rem;}

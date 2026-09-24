@@ -1,0 +1,11 @@
+<odoo>
+    <record id="factory_demo" model="compliance.factory">
+        <field name="name">Demo Garments Factory</field><field name="code">DEMO-F01</field><field name="company_id" ref="base.main_company"/>
+    </record>
+    <record id="buyer_demo" model="compliance.buyer">
+        <field name="name">Demo Buyer</field><field name="code">DEMO-B01</field><field name="company_id" ref="base.main_company"/>
+    </record>
+    <record id="audit_demo" model="compliance.audit">
+        <field name="audit_type">buyer</field><field name="standard_id" ref="standard_general_garments"/><field name="buyer_id" ref="buyer_demo"/><field name="factory_id" ref="factory_demo"/><field name="company_id" ref="base.main_company"/><field name="auditor_id" ref="base.user_admin"/>
+    </record>
+</odoo>

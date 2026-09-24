@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+<t t-name="garments_compliance.ComplianceDashboard">
+<div class="o_gc_dashboard p-4">
+  <div class="d-flex justify-content-between align-items-center mb-4"><div><h2 class="mb-1">Factory Compliance Dashboard</h2><div class="text-muted">Audit, finding, CAPA, license and HR compliance overview</div></div><div class="o_gc_score"><span>Average Score</span><strong t-esc="state.avgScore + '%'"/></div></div>
+  <div class="row g-3">
+    <div class="col-6 col-md-4 col-xl-2"><button class="o_gc_card" t-on-click="() => open('compliance.audit')"><span>Audits</span><strong t-esc="state.audits"/></button></div>
+    <div class="col-6 col-md-4 col-xl-2"><button class="o_gc_card" t-on-click="() => open('compliance.finding', [['state','!=','closed']])"><span>Open Findings</span><strong t-esc="state.openFindings"/></button></div>
+    <div class="col-6 col-md-4 col-xl-2"><button class="o_gc_card" t-on-click="() => open('compliance.capa', [['state','!=','done']])"><span>Open CAPA</span><strong t-esc="state.openCapa"/></button></div>
+    <div class="col-6 col-md-4 col-xl-2"><button class="o_gc_card" t-on-click="() => open('compliance.license')"><span>License Attention</span><strong t-esc="state.expiring"/></button></div>
+    <div class="col-6 col-md-4 col-xl-2"><button class="o_gc_card" t-on-click="() => open('compliance.hr.compliance')"><span>HR Open</span><strong t-esc="state.hrOpen"/></button></div>
+  </div>
+  <div class="mt-4"><h4>Audit Grades</h4><div class="row g-3">
+    <div class="col-6 col-md-3"><div class="o_gc_grade"><span>A</span><strong t-esc="state.gradeA"/></div></div>
+    <div class="col-6 col-md-3"><div class="o_gc_grade"><span>B</span><strong t-esc="state.gradeB"/></div></div>
+    <div class="col-6 col-md-3"><div class="o_gc_grade"><span>C</span><strong t-esc="state.gradeC"/></div></div>
+    <div class="col-6 col-md-3"><div class="o_gc_grade"><span>D</span><strong t-esc="state.gradeD"/></div></div>
+  </div></div>
+</div>
+</t>
+</templates>

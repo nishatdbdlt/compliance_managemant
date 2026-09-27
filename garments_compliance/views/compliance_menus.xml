@@ -1,0 +1,31 @@
+<odoo>
+    <menuitem id="menu_compliance_root" name="Garments Compliance" sequence="10" groups="garments_compliance.group_compliance_user"/>
+
+    <menuitem id="menu_compliance_dashboard" name="Dashboard" parent="menu_compliance_root" action="action_compliance_dashboard" sequence="1"/>
+
+    <menuitem id="menu_buyer_audit" name="Buyer Audit Management" parent="menu_compliance_root" sequence="10"/>
+    <menuitem id="menu_buyer_program" name="Audit Programs (BSCI / WRAP / SEDEX)" parent="menu_buyer_audit" action="action_buyer_standards" sequence="10"/>
+    <menuitem id="menu_buyer_audits" name="Buyer Audits" parent="menu_buyer_audit" action="action_buyer_audits" sequence="20"/>
+    <menuitem id="menu_buyer_findings" name="Audit Findings" parent="menu_buyer_audit" action="action_compliance_finding" sequence="30"/>
+    <menuitem id="menu_buyer_capa" name="CAPA Actions" parent="menu_buyer_audit" action="action_compliance_capa" sequence="40"/>
+
+    <menuitem id="menu_factory_compliance" name="Factory Compliance" parent="menu_compliance_root" sequence="20"/>
+    <menuitem id="menu_factory_audit" name="All Audits" parent="menu_factory_compliance" action="action_compliance_audit" sequence="10"/>
+    <menuitem id="menu_factory_safety" name="Safety Inspection" parent="menu_factory_compliance" action="action_compliance_safety" sequence="20"/>
+    <menuitem id="menu_factory_license" name="License &amp; Certificates" parent="menu_factory_compliance" action="action_compliance_license" sequence="30"/>
+    <menuitem id="menu_factory_hr" name="HR Compliance" parent="menu_factory_compliance" action="action_compliance_hr" sequence="40"/>
+    <menuitem id="menu_factory_training" name="Training Management" parent="menu_factory_compliance" action="action_compliance_training" sequence="50"/>
+    <menuitem id="menu_factory_document" name="Compliance Documents" parent="menu_factory_compliance" action="action_compliance_document" sequence="60"/>
+
+    <menuitem id="menu_reports" name="Reports" parent="menu_compliance_root" sequence="70"/>
+    <menuitem id="menu_reports_audit" name="Audit Score &amp; Grade Analysis" parent="menu_reports" sequence="10"/>
+    <menuitem id="menu_reports_finding" name="Finding &amp; CAPA Report" parent="menu_reports" sequence="20"/>
+    <menuitem id="menu_reports_expiry" name="Expiry Report" parent="menu_reports" sequence="30"/>
+
+    <menuitem id="menu_compliance_config" name="Configuration" parent="menu_compliance_root" sequence="90" groups="garments_compliance.group_compliance_manager"/>
+    <menuitem id="menu_compliance_factories" name="Factories" parent="menu_compliance_config" action="action_compliance_factory" sequence="10"/>
+    <menuitem id="menu_compliance_buyers" name="Buyers / Organizations" parent="menu_compliance_config" action="action_compliance_buyer" sequence="20"/>
+    <menuitem id="menu_compliance_standards" name="Standards" parent="menu_compliance_config" action="action_compliance_standard" sequence="30"/>
+    <menuitem id="menu_compliance_checklist" name="Checklist Templates" parent="menu_compliance_config" action="action_compliance_checklist" sequence="40"/>
+    <menuitem id="menu_compliance_grades" name="Grade Rules" parent="menu_compliance_config" action="action_compliance_grade_rule" sequence="50"/>
+</odoo>

@@ -1,0 +1,64 @@
+<odoo>
+    <record id="factory_demo" model="compliance.factory">
+        <field name="name">Demo Garments Factory</field>
+        <field name="code">DEMO-F01</field>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="notes">Demo factory used to preview dynamic checklist loading.</field>
+    </record>
+
+    <record id="buyer_demo" model="compliance.buyer">
+        <field name="name">Demo Buyer</field>
+        <field name="code">DEMO-B01</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <!-- Each demo audit receives all active checklist items automatically from its selected standard. -->
+    <record id="audit_demo_general" model="compliance.audit">
+        <field name="audit_type">internal</field>
+        <field name="standard_id" ref="standard_general_garments"/>
+        <field name="factory_id" ref="factory_demo"/>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="auditor_id" ref="base.user_admin"/>
+        <field name="notes">Demo: General Garments Compliance checklist auto-loaded from the selected standard.</field>
+    </record>
+
+    <record id="audit_demo_bsci" model="compliance.audit">
+        <field name="audit_type">buyer</field>
+        <field name="standard_id" ref="standard_bsci"/>
+        <field name="buyer_id" ref="buyer_org_amfori"/>
+        <field name="factory_id" ref="factory_demo"/>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="auditor_id" ref="base.user_admin"/>
+        <field name="notes">Demo: BSCI starter checklist auto-loaded dynamically.</field>
+    </record>
+
+    <record id="audit_demo_wrap" model="compliance.audit">
+        <field name="audit_type">buyer</field>
+        <field name="standard_id" ref="standard_wrap"/>
+        <field name="buyer_id" ref="buyer_org_wrap"/>
+        <field name="factory_id" ref="factory_demo"/>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="auditor_id" ref="base.user_admin"/>
+        <field name="notes">Demo: WRAP starter checklist auto-loaded dynamically.</field>
+    </record>
+
+    <record id="audit_demo_sedex" model="compliance.audit">
+        <field name="audit_type">buyer</field>
+        <field name="standard_id" ref="standard_sedex"/>
+        <field name="buyer_id" ref="buyer_org_sedex"/>
+        <field name="factory_id" ref="factory_demo"/>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="auditor_id" ref="base.user_admin"/>
+        <field name="notes">Demo: SEDEX / SMETA starter checklist auto-loaded dynamically.</field>
+    </record>
+
+    <record id="audit_demo_buyer" model="compliance.audit">
+        <field name="audit_type">buyer</field>
+        <field name="standard_id" ref="standard_buyer_general"/>
+        <field name="buyer_id" ref="buyer_demo"/>
+        <field name="factory_id" ref="factory_demo"/>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="auditor_id" ref="base.user_admin"/>
+        <field name="notes">Demo: General Buyer checklist auto-loaded dynamically.</field>
+    </record>
+</odoo>

@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="garments_compliance.ComplianceDashboard">
+        <div class="o_gc_dashboard">
+            <div class="o_gc_hero">
+                <div>
+                    <div class="o_gc_eyebrow">GARMENTS COMPLIANCE</div>
+                    <h1>Compliance Command Center</h1>
+                    <p>Live audit, finding, CAPA, license and HR compliance performance.</p>
+                </div>
+                <div class="o_gc_hero_actions">
+                    <button class="btn btn-light o_gc_refresh" t-on-click="refresh" t-att-disabled="state.loading">
+                        <i class="fa fa-refresh me-2" t-att-class="{'fa-spin': state.loading}"/>Refresh
+                    </button>
+                </div>
+            </div>
+
+            <div class="o_gc_filterbar">
+                <div class="o_gc_filter">
+                    <label>Factory</label>
+                    <select class="form-select" t-att-value="state.factoryId" t-on-change="onFactoryChange">
+                        <option value="">All factories</option>
+                        <t t-foreach="state.factories" t-as="factory" t-key="factory.id">
+                            <option t-att-value="factory.id" t-att-selected="isFactorySelected(factory.id)" t-esc="factory.name"/>
+                        </t>
+                    </select>
+                </div>
+                <div class="o_gc_filter">
+                    <label>Standard</label>
+                    <select class="form-select" t-att-value="state.standardId" t-on-change="onStandardChange">
+                        <option value="">All standards</option>
+                        <t t-foreach="state.standards" t-as="standard" t-key="standard.id">
+                            <option t-att-value="standard.id" t-att-selected="isStandardSelected(standard.id)" t-esc="standard.name"/>
+                        </t>
+                    </select>
+                </div>
+                <div class="o_gc_filter">
+                    <label>Audit period</label>
+                    <select class="form-select" t-att-value="state.period" t-on-change="onPeriodChange">
+                        <option value="30">Last 30 days</option>
+                        <option value="90">Last 90 days</option>
+                        <option value="365">Last 12 months</option>
+                        <option value="all">All time</option>
+                    </select>
+                </div>
+                <div class="o_gc_updated" t-if="state.generatedOn">
+                    <span>Last refresh</span><strong t-esc="state.generatedOn"/>
+                </div>
+            </div>
+
+            <div class="o_gc_loading" t-if="state.loading">
+                <div class="spinner-border" role="status"/><span>Loading dashboard…</span>
+            </div>
+
+            <t t-if="!state.loading">
+                <div class="o_gc_kpi_grid">
+                    <button class="o_gc_kpi o_gc_kpi_primary" t-on-click="openAuditList">
+                        <span class="o_gc_kpi_icon"><i class="fa fa-clipboard"/></span>
+                        <span class="o_gc_kpi_label">Audits</span>
+                        <strong t-esc="state.kpi.audits || 0"/>
+                        <small><t t-esc="state.kpi.completion_rate || 0"/>% reviewed / closed</small>
+                    </button>
+                    <button class="o_gc_kpi o_gc_kpi_score" t-on-click="openAuditList">
+                        <span class="o_gc_kpi_icon"><i class="fa fa-line-chart"/></span>
+                        <span class="o_gc_kpi_label">Average score</span>
+                        <strong><t t-esc="state.kpi.avg_score || 0"/><em>%</em></strong>
+                        <small>Completed checklist items</small>
+                    </button>
+                    <button class="o_gc_kpi" t-on-click="() => openFindings()">
+                        <span class="o_gc_kpi_icon"><i class="fa fa-exclamation-triangle"/></span>
+                        <span class="o_gc_kpi_label">Open findings</span>
+                        <strong t-esc="state.kpi.open_findings || 0"/>
+                        <small><b t-esc="state.kpi.critical_findings || 0"/> critical · <b t-esc="state.kpi.overdue_findings || 0"/> overdue</small>
+                    </button>
+                    <button class="o_gc_kpi" t-on-click="() => openCapa()">
+                        <span class="o_gc_kpi_icon"><i class="fa fa-wrench"/></span>
+                        <span class="o_gc_kpi_label">Open CAPA</span>
+                        <strong t-esc="state.kpi.open_capa || 0"/>
+                        <small><b t-esc="state.kpi.overdue_capa || 0"/> overdue actions</small>
+                    </button>
+                    <button class="o_gc_kpi" t-on-click="openLicenses">
+                        <span class="o_gc_kpi_icon"><i class="fa fa-certificate"/></span>
+                        <span class="o_gc_kpi_label">License attention</span>
+                        <strong t-esc="state.kpi.license_attention || 0"/>
+                        <small>Expired / expiring in 60 days</small>
+                    </button>
+                    <button class="o_gc_kpi" t-on-click="openHr">
+                        <span class="o_gc_kpi_icon"><i class="fa fa-users"/></span>
+                        <span class="o_gc_kpi_label">HR open</span>
+                        <strong t-esc="state.kpi.hr_open || 0"/>
+                        <small>Open compliance items</small>
+                    </button>
+                </div>
+
+                <div class="o_gc_main_grid">
+                    <section class="o_gc_panel o_gc_trend_panel">
+                        <div class="o_gc_panel_head">
+                            <div><span>Audit activity</span><h3>6-month trend</h3></div>
+                            <button class="btn btn-link" t-on-click="openAuditList">View audits <i class="fa fa-arrow-right ms-1"/></button>
+                        </div>
+                        <div class="o_gc_chart_area">
+                            <div class="o_gc_y_label">Audit count</div>
+                            <div class="o_gc_trend_chart">
+                                <t t-foreach="state.trend" t-as="item" t-key="item.label">
+                                    <div class="o_gc_trend_col">
+                                        <div class="o_gc_trend_value"><t t-esc="item.count"/></div>
+                                        <div class="o_gc_trend_track"><div class="o_gc_trend_bar" t-att-style="trendStyle(item)"/></div>
+                                        <div class="o_gc_trend_month" t-esc="item.label"/>
+                                        <small><t t-esc="item.score"/>%</small>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="o_gc_panel">
+                        <div class="o_gc_panel_head"><div><span>Audit quality</span><h3>Grade distribution</h3></div></div>
+                        <div class="o_gc_grade_list">
+                            <t t-foreach="state.grades" t-as="grade" t-key="grade.label">
+                                <div class="o_gc_grade_row">
+                                    <div class="o_gc_grade_badge" t-att-class="'o_gc_grade_' + grade.label.toLowerCase()" t-esc="grade.label"/>
+                                    <div class="o_gc_grade_progress"><div class="o_gc_grade_fill" t-att-style="gradeStyle(grade)"/></div>
+                                    <strong t-esc="grade.value"/>
+                                    <span><t t-esc="grade.pct"/>%</span>
+                                </div>
+                            </t>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="o_gc_chart_grid">
+                    <section class="o_gc_panel">
+                        <div class="o_gc_panel_head"><div><span>Workflow</span><h3>Audit status</h3></div><button class="btn btn-link" t-on-click="openAuditList">View all</button></div>
+                        <div class="o_gc_bar_chart">
+                            <t t-foreach="state.auditStates" t-as="item" t-key="item.key">
+                                <div class="o_gc_bar_row">
+                                    <span t-esc="item.label"/>
+                                    <div class="o_gc_bar_track"><div class="o_gc_bar_fill" t-att-style="auditStateStyle(item)"/></div>
+                                    <strong t-esc="item.value"/>
+                                </div>
+                            </t>
+                            <div class="o_gc_empty" t-if="!state.auditStates.length">No audit status data.</div>
+                        </div>
+                    </section>
+
+                    <section class="o_gc_panel">
+                        <div class="o_gc_panel_head"><div><span>Risk split</span><h3>Finding severity pie</h3></div><button class="btn btn-link" t-on-click="() => openFindings()">Findings</button></div>
+                        <div class="o_gc_donut_wrap">
+                            <div class="o_gc_donut" t-att-style="severityPieStyle()"><div><strong t-esc="state.kpi.open_findings || 0"/><span>open</span></div></div>
+                            <div class="o_gc_donut_legend">
+                                <t t-foreach="state.severities" t-as="item" t-key="item.key">
+                                    <button t-on-click="() => openFindings([['severity', '=', item.key]])"><span class="o_gc_severity_dot" t-att-class="'o_gc_' + item.key"/><span t-esc="item.label"/><strong t-esc="item.value"/></button>
+                                </t>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="o_gc_panel">
+                        <div class="o_gc_panel_head"><div><span>Coverage</span><h3>Standard mix</h3></div></div>
+                        <div class="o_gc_donut_wrap">
+                            <div class="o_gc_donut o_gc_standard_donut" t-att-style="standardMixStyle()"><div><strong t-esc="state.kpi.audits || 0"/><span>audits</span></div></div>
+                            <div class="o_gc_mix_legend">
+                                <t t-foreach="state.standardMix" t-as="item" t-key="item.label" t-foreach-index="idx">
+                                    <div><span t-att-class="mixDotClass(idx)"/><span class="o_gc_mix_label" t-esc="item.label"/><strong t-esc="item.value"/></div>
+                                </t>
+                                <div class="o_gc_empty" t-if="!state.standardMix.length">No standard data.</div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="o_gc_secondary_grid">
+                    <section class="o_gc_panel">
+                        <div class="o_gc_panel_head"><div><span>Risk profile</span><h3>Open findings by severity</h3></div></div>
+                        <div class="o_gc_severity_list">
+                            <t t-foreach="state.severities" t-as="item" t-key="item.key">
+                                <button class="o_gc_severity_row" t-on-click="() => openFindings([['severity', '=', item.key]])">
+                                    <span class="o_gc_severity_dot" t-att-class="'o_gc_' + item.key"/>
+                                    <span class="o_gc_severity_name" t-esc="item.label"/>
+                                    <span class="o_gc_severity_track"><span class="o_gc_severity_fill" t-att-class="'o_gc_' + item.key" t-att-style="severityStyle(item)"/></span>
+                                    <strong t-esc="item.value"/>
+                                </button>
+                            </t>
+                        </div>
+                    </section>
+
+                    <section class="o_gc_panel">
+                        <div class="o_gc_panel_head"><div><span>Action control</span><h3>CAPA pipeline</h3></div></div>
+                        <div class="o_gc_capa_pipeline">
+                            <t t-foreach="state.capaStates" t-as="item" t-key="item.key">
+                                <button class="o_gc_capa_stage" t-on-click="() => openCapaState(item.key)">
+                                    <strong t-esc="item.value"/><span t-esc="item.label"/>
+                                </button>
+                            </t>
+                        </div>
+                    </section>
+
+                    <section class="o_gc_panel o_gc_health_panel">
+                        <div class="o_gc_panel_head"><div><span>Overall status</span><h3>Control health</h3></div></div>
+                        <div class="o_gc_health_score">
+                            <div class="o_gc_health_ring" t-att-style="'--score:' + (state.kpi.avg_score || 0)">
+                                <div><strong><t t-esc="state.kpi.avg_score || 0"/>%</strong><span>score</span></div>
+                            </div>
+                            <div class="o_gc_health_copy">
+                                <div><span>Audit completion</span><strong><t t-esc="state.kpi.completion_rate || 0"/>%</strong></div>
+                                <div><span>Critical findings</span><strong t-esc="state.kpi.critical_findings || 0"/></div>
+                                <div><span>Overdue CAPA</span><strong t-esc="state.kpi.overdue_capa || 0"/></div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="o_gc_table_grid">
+                    <section class="o_gc_panel o_gc_table_panel">
+                        <div class="o_gc_panel_head"><div><span>Latest activity</span><h3>Recent audits</h3></div><button class="btn btn-link" t-on-click="openAuditList">All audits</button></div>
+                        <div class="table-responsive">
+                            <table class="table o_gc_table">
+                                <thead><tr><th>Audit</th><th>Factory</th><th>Standard</th><th>Date</th><th>Score</th><th>Grade</th></tr></thead>
+                                <tbody>
+                                    <t t-foreach="state.recentAudits" t-as="audit" t-key="audit.id">
+                                        <tr t-on-click="() => openRecord('compliance.audit', audit.id)">
+                                            <td><strong t-esc="audit.name"/><small t-esc="audit.state"/></td>
+                                            <td t-esc="audit.factory"/><td t-esc="audit.standard"/><td t-esc="audit.date"/>
+                                            <td><strong><t t-esc="audit.score"/>%</strong></td>
+                                            <td><span class="o_gc_table_grade" t-esc="audit.grade"/></td>
+                                        </tr>
+                                    </t>
+                                    <tr t-if="!state.recentAudits.length"><td colspan="6" class="text-center text-muted py-4">No audits for the selected filters.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <section class="o_gc_panel o_gc_findings_panel">
+                        <div class="o_gc_panel_head"><div><span>Needs attention</span><h3>Open findings</h3></div><button class="btn btn-link" t-on-click="() => openFindings()">All findings</button></div>
+                        <div class="o_gc_finding_list">
+                            <t t-foreach="state.recentFindings" t-as="finding" t-key="finding.id">
+                                <button class="o_gc_finding_item" t-on-click="() => openRecord('compliance.finding', finding.id)">
+                                    <span class="o_gc_finding_marker" t-att-class="'o_gc_' + finding.severity"/>
+                                    <span class="o_gc_finding_body"><strong t-esc="finding.name"/><small><t t-esc="finding.reference"/> · <t t-esc="finding.severity"/></small></span>
+                                    <span class="o_gc_due" t-att-class="{'is-overdue': finding.overdue}"><i class="fa fa-clock-o me-1"/><t t-esc="finding.deadline || 'No date'"/></span>
+                                </button>
+                            </t>
+                            <div t-if="!state.recentFindings.length" class="o_gc_empty">No open findings for the selected filters.</div>
+                        </div>
+                    </section>
+                </div>
+            </t>
+        </div>
+    </t>
+</templates>

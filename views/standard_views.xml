@@ -1,0 +1,19 @@
+<odoo>
+    <record id="view_compliance_standard_list" model="ir.ui.view">
+        <field name="name">compliance.standard.list</field><field name="model">compliance.standard</field>
+        <field name="arch" type="xml"><list><field name="code"/><field name="name"/><field name="program_type"/><field name="category"/><field name="checklist_count"/><field name="company_id" groups="base.group_multi_company"/><field name="active"/></list></field>
+    </record>
+    <record id="view_compliance_standard_form" model="ir.ui.view">
+        <field name="name">compliance.standard.form</field><field name="model">compliance.standard</field>
+        <field name="arch" type="xml"><form><sheet><div class="oe_title"><h1><field name="name"/></h1></div><group><group><field name="code"/><field name="program_type"/><field name="category"/><field name="company_id" groups="base.group_multi_company"/></group><group><field name="active"/><field name="checklist_count" readonly="1"/></group></group><field name="description"/><notebook><page string="Checklist"><field name="checklist_ids"><list editable="bottom"><field name="sequence" widget="handle"/><field name="name"/><field name="category"/><field name="severity"/><field name="weight"/><field name="mandatory"/><field name="active"/></list></field></page></notebook></sheet></form></field>
+    </record>
+
+    <record id="view_compliance_checklist_list" model="ir.ui.view">
+        <field name="name">compliance.checklist.list</field><field name="model">compliance.checklist</field>
+        <field name="arch" type="xml"><list><field name="sequence" widget="handle"/><field name="standard_id"/><field name="name"/><field name="category"/><field name="severity"/><field name="weight"/><field name="mandatory"/><field name="active"/></list></field>
+    </record>
+    <record id="view_compliance_checklist_form" model="ir.ui.view">
+        <field name="name">compliance.checklist.form</field><field name="model">compliance.checklist</field>
+        <field name="arch" type="xml"><form><sheet><group><group><field name="standard_id"/><field name="sequence"/><field name="name"/><field name="category"/></group><group><field name="severity"/><field name="weight"/><field name="mandatory"/><field name="active"/></group></group><field name="requirement"/><field name="guidance"/></sheet></form></field>
+    </record>
+</odoo>

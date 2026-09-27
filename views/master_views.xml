@@ -1,0 +1,24 @@
+<odoo>
+    <record id="view_compliance_factory_list" model="ir.ui.view">
+        <field name="name">compliance.factory.list</field><field name="model">compliance.factory</field>
+        <field name="arch" type="xml"><list><field name="code"/><field name="name"/><field name="company_id" groups="base.group_multi_company"/><field name="responsible_id"/><field name="partner_id"/></list></field>
+    </record>
+    <record id="view_compliance_factory_form" model="ir.ui.view">
+        <field name="name">compliance.factory.form</field><field name="model">compliance.factory</field>
+        <field name="arch" type="xml"><form><sheet><div class="oe_title"><h1><field name="name"/></h1></div><group><group><field name="code"/><field name="company_id" groups="base.group_multi_company"/><field name="responsible_id"/></group><group><field name="partner_id"/><field name="active"/></group></group><field name="notes"/></sheet><chatter/></form></field>
+    </record>
+
+    <record id="view_compliance_buyer_list" model="ir.ui.view">
+        <field name="name">compliance.buyer.list</field><field name="model">compliance.buyer</field>
+        <field name="arch" type="xml"><list><field name="code"/><field name="name"/><field name="partner_id"/><field name="company_id" groups="base.group_multi_company"/><field name="active"/></list></field>
+    </record>
+    <record id="view_compliance_buyer_form" model="ir.ui.view">
+        <field name="name">compliance.buyer.form</field><field name="model">compliance.buyer</field>
+        <field name="arch" type="xml"><form><sheet><div class="oe_title"><h1><field name="name"/></h1></div><group><field name="code"/><field name="partner_id"/><field name="company_id" groups="base.group_multi_company"/><field name="active"/></group><field name="notes"/></sheet></form></field>
+    </record>
+
+    <record id="view_compliance_grade_rule_list" model="ir.ui.view">
+        <field name="name">compliance.grade.rule.list</field><field name="model">compliance.grade.rule</field>
+        <field name="arch" type="xml"><list editable="bottom"><field name="name"/><field name="min_score"/><field name="max_score"/><field name="description"/><field name="company_id" groups="base.group_multi_company"/><field name="active"/></list></field>
+    </record>
+</odoo>

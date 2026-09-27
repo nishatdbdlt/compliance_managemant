@@ -1,0 +1,19 @@
+<odoo>
+    <record id="action_compliance_audit" model="ir.actions.act_window"><field name="name">Audits</field><field name="res_model">compliance.audit</field><field name="view_mode">list,form,pivot,graph</field></record>
+    <record id="action_compliance_finding" model="ir.actions.act_window"><field name="name">Findings / Non-Compliance</field><field name="res_model">compliance.finding</field><field name="view_mode">list,form,pivot</field></record>
+    <record id="action_compliance_capa" model="ir.actions.act_window"><field name="name">CAPA Actions</field><field name="res_model">compliance.capa</field><field name="view_mode">list,form</field></record>
+    <record id="action_compliance_license" model="ir.actions.act_window"><field name="name">Licenses &amp; Certificates</field><field name="res_model">compliance.license</field><field name="view_mode">list,form</field></record>
+    <record id="action_compliance_safety" model="ir.actions.act_window"><field name="name">Safety Inspections</field><field name="res_model">compliance.safety.inspection</field><field name="view_mode">list,form</field></record>
+    <record id="action_compliance_training" model="ir.actions.act_window"><field name="name">Training</field><field name="res_model">compliance.training</field><field name="view_mode">list,form</field></record>
+    <record id="action_compliance_document" model="ir.actions.act_window"><field name="name">Documents</field><field name="res_model">compliance.document</field><field name="view_mode">list,form</field></record>
+    <record id="action_compliance_factory" model="ir.actions.act_window"><field name="name">Factories</field><field name="res_model">compliance.factory</field><field name="view_mode">list,form</field></record>
+    <record id="action_compliance_buyer" model="ir.actions.act_window"><field name="name">Buyers / Organizations</field><field name="res_model">compliance.buyer</field><field name="view_mode">list,form</field></record>
+    <record id="action_compliance_standard" model="ir.actions.act_window"><field name="name">Standards</field><field name="res_model">compliance.standard</field><field name="view_mode">list,form</field></record>
+    <record id="action_compliance_checklist" model="ir.actions.act_window"><field name="name">Checklist Items</field><field name="res_model">compliance.checklist</field><field name="view_mode">list,form</field></record>
+    <record id="action_compliance_grade_rule" model="ir.actions.act_window"><field name="name">Grade Rules</field><field name="res_model">compliance.grade.rule</field><field name="view_mode">list</field></record>
+
+    <record id="action_buyer_audits" model="ir.actions.act_window"><field name="name">Buyer Audits</field><field name="res_model">compliance.audit</field><field name="view_mode">list,form,pivot,graph</field><field name="domain">[('audit_type','=','buyer')]</field><field name="context">{'default_audit_type': 'buyer'}</field></record>
+    <record id="action_buyer_standards" model="ir.actions.act_window"><field name="name">BSCI / WRAP / SEDEX / Buyer Standards</field><field name="res_model">compliance.standard</field><field name="view_mode">list,form</field><field name="domain">[('program_type','in',['bsci','wrap','sedex','buyer'])]</field></record>
+    <record id="action_compliance_hr" model="ir.actions.act_window"><field name="name">HR Compliance</field><field name="res_model">compliance.hr.compliance</field><field name="view_mode">list,form</field></record>
+    <record id="action_compliance_dashboard" model="ir.actions.client"><field name="name">Compliance Dashboard</field><field name="tag">garments_compliance.dashboard</field></record>
+</odoo>
